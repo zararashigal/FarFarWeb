@@ -1,0 +1,4368 @@
+{
+ "meta": {
+  "game": "Far Far West",
+  "jokerCount": 153,
+  "sources": [
+   "bloxodes.com/wiki/far-far-west/jokers (updated 2026-11-18)",
+   "wikily.gg/far-far-west/jokers"
+  ],
+  "snapshot": "2026-11-24",
+  "notes": [
+   "stats[]: structured numbers parsed from the effect text. unit % = percent, flat = absolute number, hp/sp = health/shield points, sec = seconds, x = multiplier. note = condition or scaling. Jokers with empty stats have no numeric values in the source (e.g. Dwarf, Giant).",
+   "Slots per rail: 14. Normal=1, Fine=2, Prime=3, Mythic=4, Legendary=5; Unique cost is per card (2-6 in this snapshot).",
+   "scope=hero: equips on the hero. scope=weapon: equips on one of the listed weapons.",
+   "effect texts are English as shown in game wikis; verify against the game after each patch.",
+   "soulCost is the shop buy price by tier from the supplied table; Unique jokers are free."
+  ]
+ },
+ "jokers": [
+  {
+   "id": "bracing",
+   "name": "Bracing",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "+5% attack and reload speed.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "attackSpeed",
+     "value": 5,
+     "unit": "%"
+    },
+    {
+     "stat": "reloadSpeed",
+     "value": 5,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "chickshot",
+   "name": "Chickshot",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "+50% chance for attacks to make chicken sounds. Useless!",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "chickenSoundChance",
+     "value": 50,
+     "unit": "%"
+    }
+   ],
+   "cosmetic": true
+  },
+  {
+   "id": "deadly-strong",
+   "name": "Deadly Strong",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "Move faster and deal more damage as a dead ghost.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": []
+  },
+  {
+   "id": "free-cocktail",
+   "name": "Free Cocktail",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "When you reload an empty clip, heal for 2 HP.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "heal",
+     "value": 2,
+     "unit": "hp",
+     "note": "on reloading an empty clip"
+    }
+   ]
+  },
+  {
+   "id": "gold-tooth",
+   "name": "Gold Tooth",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 10,
+   "effect": "+10% chance for enemies to drop 1 gold nugget upon death.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "nuggetDropChance",
+     "value": 10,
+     "unit": "%",
+     "note": "on enemy death"
+    }
+   ]
+  },
+  {
+   "id": "heavy-drinker",
+   "name": "Heavy Drinker",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 1,
+   "effect": "Healing bottles are 25% more effective on you.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "bottleHealing",
+     "value": 25,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "heavy-weapon",
+   "name": "Heavy Weapon",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "+10% damage, but +30% gravity while the weapon is active.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 10,
+     "unit": "%"
+    },
+    {
+     "stat": "gravity",
+     "value": 30,
+     "unit": "%",
+     "note": "while weapon active"
+    }
+   ]
+  },
+  {
+   "id": "helping-hand",
+   "name": "Helping Hand",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "You can revive your allies twice as fast.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "reviveSpeed",
+     "value": 2,
+     "unit": "x"
+    }
+   ]
+  },
+  {
+   "id": "knuckle-down",
+   "name": "Knuckle Down",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 1,
+   "effect": "+10% melee damage.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "meleeDamage",
+     "value": 10,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "last-dance",
+   "name": "Last Dance",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "While at or below 30% HP, gain +30% move speed.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "moveSpeed",
+     "value": 30,
+     "unit": "%",
+     "note": "HP <= 30%"
+    },
+    {
+     "stat": "hpThreshold",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "lightweight",
+   "name": "Lightweight",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "-5% gravity.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "gravity",
+     "value": -5,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "magic-reload",
+   "name": "Magic Reload",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 1,
+   "effect": "Automatically reload your weapon after casting a spell.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": []
+  },
+  {
+   "id": "panic-attack",
+   "name": "Panic Attack",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 1,
+   "effect": "When you take HP damage, gain +20% damage for 3 sec.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 20,
+     "unit": "%",
+     "note": "after taking HP damage"
+    },
+    {
+     "stat": "duration",
+     "value": 3,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "party-shot",
+   "name": "Party Shot",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "+50% chance for weakspot hits to blow confetti. Useless!",
+   "scope": "weapon",
+   "weapons": [
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "confettiChance",
+     "value": 50,
+     "unit": "%",
+     "note": "on weakspot hit"
+    }
+   ],
+   "cosmetic": true
+  },
+  {
+   "id": "pigshot",
+   "name": "Pigshot",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "+5% chance to spawn a pig on impact. Attack them to make them explode.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "pigSpawnChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on impact"
+    }
+   ]
+  },
+  {
+   "id": "quickdraw",
+   "name": "Quickdraw",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "+40% swap speed.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "swapSpeed",
+     "value": 40,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "relentless",
+   "name": "Relentless",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 1,
+   "effect": "While at or below 30% HP, deal +30% damage.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 30,
+     "unit": "%",
+     "note": "HP <= 30%"
+    },
+    {
+     "stat": "hpThreshold",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "rubber-duck",
+   "name": "Rubber Duck",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 1,
+   "effect": "Walking makes rubber duck noises. Useless!",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [],
+   "cosmetic": true
+  },
+  {
+   "id": "shine-bright",
+   "name": "Shine Bright",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 8,
+   "effect": "+50% hero glow. You're shining! Useless!",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "heroGlow",
+     "value": 50,
+     "unit": "%"
+    }
+   ],
+   "cosmetic": true
+  },
+  {
+   "id": "spare-bullets",
+   "name": "Spare Bullets",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 2,
+   "effect": "+10% ammo bag.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "ammoBag",
+     "value": 10,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "swift-shot",
+   "name": "Swift Shot",
+   "tier": "normal",
+   "soulCost": 50,
+   "slotCost": 1,
+   "maxStack": 4,
+   "effect": "+10% attack speed when aiming.",
+   "scope": "weapon",
+   "weapons": [
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "attackSpeed",
+     "value": 10,
+     "unit": "%",
+     "note": "while aiming"
+    }
+   ]
+  },
+  {
+   "id": "anti-gravity-falls",
+   "name": "Anti-Gravity Falls",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+2% chance to spawn an anti-gravity area when an enemy dies.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "zoneSpawnChance",
+     "value": 2,
+     "unit": "%",
+     "note": "on enemy death"
+    }
+   ],
+   "unlockNote": "Purple Obelisks secret (Area 41)"
+  },
+  {
+   "id": "bell-shot",
+   "name": "Bell Shot",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+5% chance for weakspot hits to summon a healing ghost bell.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "bellChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on weakspot hit"
+    }
+   ],
+   "unlockNote": "Ghost Bells secret (Far West)"
+  },
+  {
+   "id": "bouncing-ball",
+   "name": "Bouncing Ball",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+15% damage airborne.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 15,
+     "unit": "%",
+     "note": "while airborne"
+    }
+   ]
+  },
+  {
+   "id": "cactus-day",
+   "name": "Cactus Day",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+5% chance for a Cactus Mino to spawn when an enemy dies.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "cactusMinoChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on enemy death"
+    }
+   ],
+   "unlockNote": "Cacti secret (Desert)"
+  },
+  {
+   "id": "care-package",
+   "name": "Care Package",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+1 Utility Ammo.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "utilityAmmo",
+     "value": 1,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "chad",
+   "name": "Chad",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Reveals the position of the Wandering Trader and get a 20% discount.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "shopDiscount",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "clutch",
+   "name": "Clutch",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+2 explosive bullets at the end of your magazine.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "explosiveBullets",
+     "value": 2,
+     "unit": "flat",
+     "note": "at end of magazine"
+    }
+   ]
+  },
+  {
+   "id": "crackshot",
+   "name": "Crackshot",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+7% damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 7,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "fast-hands",
+   "name": "Fast Hands",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+20% reload speed.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "reloadSpeed",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "fight-or-flight",
+   "name": "Fight Or Flight",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "Taking HP damage grants +20% melee speed for 3 sec.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "meleeSpeed",
+     "value": 20,
+     "unit": "%",
+     "note": "after taking HP damage"
+    },
+    {
+     "stat": "duration",
+     "value": 3,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "fist-fight",
+   "name": "Fist Fight",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 4,
+   "effect": "Your bare hands hits are more powerful.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": []
+  },
+  {
+   "id": "frost-bite",
+   "name": "Frost Bite",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Melee kills on frozen enemies grant 2 shield points.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Knuckles",
+    "Lasso"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "shield",
+     "value": 2,
+     "unit": "sp",
+     "note": "melee kill on frozen enemy"
+    }
+   ]
+  },
+  {
+   "id": "gold-prospector",
+   "name": "Gold Prospector",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Increase your acquired Gold by 20% at the end of a mission.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "missionGold",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "hop",
+   "name": "Hop",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "+20% jump height.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "jumpHeight",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "lucky-strike",
+   "name": "Lucky Strike",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+10% chance to deal double damage per hit.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "doubleDamageChance",
+     "value": 10,
+     "unit": "%",
+     "note": "per hit"
+    }
+   ]
+  },
+  {
+   "id": "lunge",
+   "name": "Lunge",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "+15% melee range and hitbox size.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Knuckles",
+    "Lasso"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "meleeRange",
+     "value": 15,
+     "unit": "%"
+    },
+    {
+     "stat": "meleeHitbox",
+     "value": 15,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "medicard",
+   "name": "Medicard",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Picking up a joker heals for a bonus +35HP.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "heal",
+     "value": 35,
+     "unit": "hp",
+     "note": "on joker pickup"
+    }
+   ]
+  },
+  {
+   "id": "pick-pick",
+   "name": "Pick Pick",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+10% chance on hit to spawn damaging pickaxes on the target.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "pickaxeChance",
+     "value": 10,
+     "unit": "%",
+     "note": "on hit"
+    }
+   ],
+   "unlockNote": "Medallions secret (Canyon)"
+  },
+  {
+   "id": "precious-rush",
+   "name": "Precious Rush",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+10% chance for a speed-boosting ring to spawn when an enemy dies; collecting the ring grants +60% movement speed.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "ringSpawnChance",
+     "value": 10,
+     "unit": "%",
+     "note": "on enemy death"
+    },
+    {
+     "stat": "moveSpeed",
+     "value": 60,
+     "unit": "%",
+     "note": "ring collected"
+    }
+   ],
+   "unlockNote": "The Precious secret (Hellfire)"
+  },
+  {
+   "id": "prickly-pear",
+   "name": "Prickly Pear",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "When you take HP damage, deal the same damage plus 15 back to the attacker.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "reflectBonusDamage",
+     "value": 15,
+     "unit": "flat",
+     "note": "plus the damage taken, returned to attacker"
+    }
+   ]
+  },
+  {
+   "id": "rage",
+   "name": "Rage",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Upon reaching 25% HP, release a wave that burns nearby enemies (cooldown: 60 sec.).",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "hpThreshold",
+     "value": 25,
+     "unit": "%"
+    },
+    {
+     "stat": "cooldown",
+     "value": 60,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "run-gun",
+   "name": "Run & Gun",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 6,
+   "effect": "+30% move speed when shooting.",
+   "scope": "weapon",
+   "weapons": [
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "moveSpeed",
+     "value": 30,
+     "unit": "%",
+     "note": "while shooting"
+    }
+   ]
+  },
+  {
+   "id": "run-reload",
+   "name": "Run & Reload",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 6,
+   "effect": "+50% move speed when reloading.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "moveSpeed",
+     "value": 50,
+     "unit": "%",
+     "note": "while reloading"
+    }
+   ]
+  },
+  {
+   "id": "scout-s-honor",
+   "name": "Scout's Honor",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "After 10 sec. without taking damage, your shield is set to a minimum of 10 shield points.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "minShield",
+     "value": 10,
+     "unit": "sp",
+     "note": "after no damage taken"
+    },
+    {
+     "stat": "delay",
+     "value": 10,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "scrub-hit",
+   "name": "Scrub Hit",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Your primary weapon removes elements from enemies to instantly deal 10 damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "flatDamage",
+     "value": 10,
+     "unit": "flat",
+     "note": "removes enemy elements"
+    }
+   ]
+  },
+  {
+   "id": "shroom-grave",
+   "name": "Shroom Grave",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+10% chance for a shroom to spawn when an enemy dies.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "shroomChance",
+     "value": 10,
+     "unit": "%",
+     "note": "on enemy death"
+    }
+   ],
+   "unlockNote": "Seven mushrooms in sequence (Woodlands)"
+  },
+  {
+   "id": "slow-and-steady",
+   "name": "Slow And Steady",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "Gain +25% accuracy, but -10% attack speed.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "accuracy",
+     "value": 25,
+     "unit": "%"
+    },
+    {
+     "stat": "attackSpeed",
+     "value": -10,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "soul-reaper",
+   "name": "Soul Reaper",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Increase your acquired Souls by 20% at the end of a mission.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "missionSouls",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "soul-siphon",
+   "name": "Soul Siphon",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "Increased pick up range and heals for +2 HP when picking up a soul.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "heal",
+     "value": 2,
+     "unit": "hp",
+     "note": "on soul pickup"
+    }
+   ]
+  },
+  {
+   "id": "speedy-gunzales",
+   "name": "Speedy Gunzales",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+10% move speed.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "moveSpeed",
+     "value": 10,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "switchshot",
+   "name": "Switchshot",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "Your first hit after equipping a weapon deals 30% more damage. For shotguns, the bonus applies to the entire blast.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 30,
+     "unit": "%",
+     "note": "first hit after equipping weapon"
+    }
+   ]
+  },
+  {
+   "id": "well-fed",
+   "name": "Well Fed",
+   "tier": "fine",
+   "soulCost": 300,
+   "slotCost": 2,
+   "maxStack": 2,
+   "effect": "+7 HP.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "maxHp",
+     "value": 7,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "ammo-supply",
+   "name": "Ammo Supply",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+5% chance for enemies to drop an ammo box upon death.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "ammoBoxChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on enemy death"
+    }
+   ]
+  },
+  {
+   "id": "apprentice",
+   "name": "Apprentice",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "-10% spell cooldown.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -10,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "avalanche",
+   "name": "Avalanche",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+15% damage while shielded.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 15,
+     "unit": "%",
+     "note": "while shielded"
+    }
+   ]
+  },
+  {
+   "id": "berserker",
+   "name": "Berserker",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "Gain up to +50% melee damage as your HP gets lower.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Knuckles",
+    "Lasso"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "meleeDamageMax",
+     "value": 50,
+     "unit": "%",
+     "note": "scales up as HP gets lower"
+    }
+   ]
+  },
+  {
+   "id": "bloodlust",
+   "name": "Bloodlust",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Melee kills grant a stacking +5% melee speed for 5 sec., up to +50%.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Knuckles",
+    "Lasso"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "meleeSpeed",
+     "value": 5,
+     "unit": "%",
+     "note": "per melee kill, stacking"
+    },
+    {
+     "stat": "maxMeleeSpeed",
+     "value": 50,
+     "unit": "%"
+    },
+    {
+     "stat": "duration",
+     "value": 5,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "cheapskate",
+   "name": "Cheapskate",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "Gain +1 HP for every 15 Gold in your mission inventory, up to +20 HP.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "hp",
+     "value": 1,
+     "unit": "flat",
+     "note": "per 15 gold in mission inventory"
+    },
+    {
+     "stat": "hpCap",
+     "value": 20,
+     "unit": "flat",
+     "note": "cap"
+    },
+    {
+     "stat": "goldPerHp",
+     "value": 15,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "chonky",
+   "name": "Chonky",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+20% damage, but +15% gravity.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 20,
+     "unit": "%"
+    },
+    {
+     "stat": "gravity",
+     "value": 15,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "destroyer",
+   "name": "Destroyer",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "The first 25% of your clip deals +20% damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 20,
+     "unit": "%",
+     "note": "first 25% of the clip"
+    },
+    {
+     "stat": "clipPortion",
+     "value": 25,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "disgrace",
+   "name": "Disgrace",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Gain +30% movement speed. Your horse does not want to be with you.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "moveSpeed",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "explosive-hits-acid",
+   "name": "Explosive Hits (Acid)",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+5% chance for your hits to cause an explosion (Acid).",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "explosionChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on hit"
+    }
+   ]
+  },
+  {
+   "id": "explosive-hits-elec",
+   "name": "Explosive Hits (Elec)",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+5% chance for your hits to cause an explosion (Elec).",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "explosionChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on hit"
+    }
+   ]
+  },
+  {
+   "id": "explosive-hits-frost",
+   "name": "Explosive Hits (Frost)",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+5% chance for your hits to cause an explosion (Frost).",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "explosionChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on hit"
+    }
+   ]
+  },
+  {
+   "id": "explosive-hits-pyro",
+   "name": "Explosive Hits (Pyro)",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+5% chance for your hits to cause an explosion (Pyro).",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "explosionChance",
+     "value": 5,
+     "unit": "%",
+     "note": "on hit"
+    }
+   ]
+  },
+  {
+   "id": "final-ember",
+   "name": "Final Ember",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "While at or below 30% HP, your hits are electrified.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "redwood_secret_mission",
+    "hero_shop"
+   ],
+   "stats": [
+    {
+     "stat": "hpThreshold",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "great-wall",
+   "name": "Great Wall",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Reduce all damage taken by 10% when shielded.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damageTaken",
+     "value": -10,
+     "unit": "%",
+     "note": "while shielded"
+    }
+   ]
+  },
+  {
+   "id": "healthy-boi",
+   "name": "Healthy Boi",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "While at full HP, gain +20% move speed, reload speed, and attack speed.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "moveSpeed",
+     "value": 20,
+     "unit": "%"
+    },
+    {
+     "stat": "reloadSpeed",
+     "value": 20,
+     "unit": "%"
+    },
+    {
+     "stat": "attackSpeed",
+     "value": 20,
+     "unit": "%",
+     "note": "at full HP"
+    }
+   ]
+  },
+  {
+   "id": "last-bastion",
+   "name": "Last Bastion",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Upon reaching 25% HP, gain +50 shield (cooldown: 60 sec.).",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "hpThreshold",
+     "value": 25,
+     "unit": "%"
+    },
+    {
+     "stat": "shield",
+     "value": 50,
+     "unit": "sp"
+    },
+    {
+     "stat": "cooldown",
+     "value": 60,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "lazy",
+   "name": "Lazy",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Ammo pickups are disabled. Gain 10% of max ammo every 12 sec.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "ammoRegen",
+     "value": 10,
+     "unit": "%",
+     "note": "of max ammo every 12 sec"
+    },
+    {
+     "stat": "interval",
+     "value": 12,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "magic-friendship",
+   "name": "Magic Friendship",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "Passively regain 0.5 HP per second while near allies.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "hpRegen",
+     "value": 0.5,
+     "unit": "hp/sec",
+     "note": "while near allies"
+    }
+   ]
+  },
+  {
+   "id": "pew-pew-pew",
+   "name": "Pew Pew Pew",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "+20% attack speed.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "attackSpeed",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "rampage",
+   "name": "Rampage",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "Gain 5% reload speed on kill for 10 sec., up to 100%.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "reloadSpeed",
+     "value": 5,
+     "unit": "%",
+     "note": "per kill"
+    },
+    {
+     "stat": "maxReloadSpeed",
+     "value": 100,
+     "unit": "%"
+    },
+    {
+     "stat": "duration",
+     "value": 10,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "reload-mastery",
+   "name": "Reload Mastery",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "Reloading an empty clip is 50% faster.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "emptyReloadSpeed",
+     "value": 50,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "sharp-shooter",
+   "name": "Sharp Shooter",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+20% weakspot damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "weakspotDamage",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "soul-eater",
+   "name": "Soul Eater",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "Picking up a soul grants 20% damage and reload speed for 5 sec.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 20,
+     "unit": "%",
+     "note": "after soul pickup"
+    },
+    {
+     "stat": "reloadSpeed",
+     "value": 20,
+     "unit": "%",
+     "note": "after soul pickup"
+    },
+    {
+     "stat": "duration",
+     "value": 5,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "stonks",
+   "name": "Stonks",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "+20% chance that opening a chest gives you a random Joker.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "chestJokerChance",
+     "value": 20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "weak-link",
+   "name": "Weak Link",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 2,
+   "effect": "+35% weakspot damage, but -20% regular hits damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "weakspotDamage",
+     "value": 35,
+     "unit": "%"
+    },
+    {
+     "stat": "regularHitDamage",
+     "value": -20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "weakspot-refund",
+   "name": "Weakspot Refund",
+   "tier": "prime",
+   "soulCost": 500,
+   "slotCost": 3,
+   "maxStack": 4,
+   "effect": "+20% chance to get your ammo back after a weakspot hit.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "ammoRefundChance",
+     "value": 20,
+     "unit": "%",
+     "note": "on weakspot hit"
+    }
+   ]
+  },
+  {
+   "id": "acid-mastery",
+   "name": "Acid Mastery",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain -10% Acid cooldown per equipped Acid spell.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -10,
+     "unit": "%",
+     "note": "per equipped Acid spell"
+    }
+   ]
+  },
+  {
+   "id": "cactus-mastery",
+   "name": "Cactus Mastery",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain -10% Cactus spells cooldown per equipped Cactus spell.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -10,
+     "unit": "%",
+     "note": "per equipped Cactus spell"
+    }
+   ]
+  },
+  {
+   "id": "cold-blooded",
+   "name": "Cold Blooded",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Your melee attacks freeze enemies, consuming 3 shield points per enemy.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "shieldCost",
+     "value": 3,
+     "unit": "sp",
+     "note": "per frozen enemy"
+    }
+   ]
+  },
+  {
+   "id": "consumer",
+   "name": "Consumer",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Grants +25% weapon damage, but reloading now wastes unused ammo.",
+   "scope": "weapon",
+   "weapons": [
+    "Long Ranger",
+    "Quad Cylinder",
+    "Revolver"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 25,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "death-s-dance",
+   "name": "Death's Dance",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Your shield decreases 30% less quickly.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "shieldDecay",
+     "value": -30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "eat-a-punch",
+   "name": "Eat-A-Punch",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 2,
+   "effect": "Melee kills heal you for 2 HP.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Knuckles",
+    "Lasso"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "heal",
+     "value": 2,
+     "unit": "hp",
+     "note": "on melee kill"
+    }
+   ]
+  },
+  {
+   "id": "elec-mastery",
+   "name": "Elec Mastery",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain -10% Elec spells cooldown per equipped Elec spell.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -10,
+     "unit": "%",
+     "note": "per equipped Elec spell"
+    }
+   ]
+  },
+  {
+   "id": "execute",
+   "name": "Execute",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Your hits instantly kill enemies below 20% HP, except elites and bosses. These kills trigger on-kill Jokers such as Life Pact and increase your kill streak.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "executeThreshold",
+     "value": 20,
+     "unit": "%",
+     "note": "enemy HP, not elites/bosses"
+    }
+   ]
+  },
+  {
+   "id": "extra-jump",
+   "name": "Extra Jump",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 2,
+   "effect": "+1 Jump.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "extraJumps",
+     "value": 1,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "frost-mastery",
+   "name": "Frost Mastery",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain -10% Frost spells cooldown per equipped Frost spell.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -10,
+     "unit": "%",
+     "note": "per equipped Frost spell"
+    }
+   ]
+  },
+  {
+   "id": "headbang",
+   "name": "Headbang",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "+30% weakspot damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "weakspotDamage",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "hit-me",
+   "name": "Hit Me",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Heal 0.75 HP per second for 20 sec. after being hit.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "hpRegen",
+     "value": 0.75,
+     "unit": "hp/sec",
+     "note": "after being hit"
+    },
+    {
+     "stat": "duration",
+     "value": 20,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "hoarder",
+   "name": "Hoarder",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "+15% chance that collecting a Joker makes another random one appear.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "extraJokerChance",
+     "value": 15,
+     "unit": "%",
+     "note": "on joker pickup"
+    }
+   ]
+  },
+  {
+   "id": "joker-dealer",
+   "name": "Joker Dealer",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain +1 HP for each active Joker.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "maxHp",
+     "value": 1,
+     "unit": "flat",
+     "note": "per active joker"
+    }
+   ]
+  },
+  {
+   "id": "last-stand",
+   "name": "Last Stand",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "While at or below 30% HP, reduce all damage taken by -30% and gain 10% melee lifesteal.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "hpThreshold",
+     "value": 30,
+     "unit": "%"
+    },
+    {
+     "stat": "damageTaken",
+     "value": -30,
+     "unit": "%"
+    },
+    {
+     "stat": "meleeLifesteal",
+     "value": 10,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "life-pact",
+   "name": "Life Pact",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 2,
+   "effect": "Kills heal you for 2 HP, but max. HP is reduced by 30%.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "heal",
+     "value": 2,
+     "unit": "hp",
+     "note": "on kill"
+    },
+    {
+     "stat": "maxHp",
+     "value": -30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "moon-gravity",
+   "name": "Moon Gravity",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 2,
+   "effect": "-25% gravity.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "gravity",
+     "value": -25,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "pyro-mastery",
+   "name": "Pyro Mastery",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain -10% Pyro spells cooldown per equipped Pyro spell.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -10,
+     "unit": "%",
+     "note": "per equipped Pyro spell"
+    }
+   ]
+  },
+  {
+   "id": "riposte",
+   "name": "Riposte",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 2,
+   "effect": "After your shield absorbs a hit, your next attack deals +100% damage. The bonus applies to the entire Boomerang throw or shotgun blast.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 100,
+     "unit": "%",
+     "note": "next attack after shield absorbs a hit"
+    }
+   ]
+  },
+  {
+   "id": "second-wind",
+   "name": "Second Wind",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Heal 50 HP instead of dying to a fatal hit (cooldown: 180 sec.).",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "heal",
+     "value": 50,
+     "unit": "hp",
+     "note": "instead of dying"
+    },
+    {
+     "stat": "cooldown",
+     "value": 180,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "snack-a-punch",
+   "name": "Snack-A-Punch",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Melee kills grant you 1 shield points.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Knuckles",
+    "Lasso"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "shield",
+     "value": 1,
+     "unit": "sp",
+     "note": "on melee kill"
+    }
+   ]
+  },
+  {
+   "id": "thick-skin",
+   "name": "Thick Skin",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Reduce all damage taken by 20%, but receive -30% healing.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "damageTaken",
+     "value": -20,
+     "unit": "%"
+    },
+    {
+     "stat": "healingReceived",
+     "value": -30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "tin-man",
+   "name": "Tin Man",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "While at full health, excess healing converts into shield points, up to +15 SP. Healing below full health does not grant shield points.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "maxOverhealShield",
+     "value": 15,
+     "unit": "sp",
+     "note": "at full health"
+    }
+   ]
+  },
+  {
+   "id": "voodoo-mastery",
+   "name": "Voodoo Mastery",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain -10% Voodoo spells cooldown per equipped Voodoo spell.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -10,
+     "unit": "%",
+     "note": "per equipped Voodoo spell"
+    }
+   ]
+  },
+  {
+   "id": "west-wizard",
+   "name": "West Wizard",
+   "tier": "mythic",
+   "soulCost": 800,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Gain -30% spell cooldown, but -30% HP.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -30,
+     "unit": "%"
+    },
+    {
+     "stat": "maxHp",
+     "value": -30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "all-mighty",
+   "name": "All Mighty",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Gain +1% damage per 1 shield point, up to 80%.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 1,
+     "unit": "%",
+     "note": "per shield point"
+    },
+    {
+     "stat": "maxDamage",
+     "value": 80,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "battlemage",
+   "name": "Battlemage",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Killing an enemy shortens all ongoing spell cooldowns by 0.5%.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldownReduction",
+     "value": 0.5,
+     "unit": "%",
+     "note": "per kill, ongoing cooldowns"
+    }
+   ]
+  },
+  {
+   "id": "camper",
+   "name": "Camper",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "+50% chance not to consume ammo while standing still.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "ammoSaveChance",
+     "value": 50,
+     "unit": "%",
+     "note": "while standing still"
+    }
+   ]
+  },
+  {
+   "id": "cantrip-one-trick",
+   "name": "Cantrip One-Trick",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Spells with base cooldowns of 35s or less gain -25% spell cooldown.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -25,
+     "unit": "%",
+     "note": "spells with base cooldown <= 35s"
+    },
+    {
+     "stat": "baseCooldownMax",
+     "value": 35,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "cast-away",
+   "name": "Cast Away",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Casting a spell decreases the spell cooldown of other spells by 3 sec. to a minimum of 4 sec.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldownReduction",
+     "value": 3,
+     "unit": "sec",
+     "note": "on spell cast, other spells"
+    },
+    {
+     "stat": "minCooldown",
+     "value": 4,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "coinflip",
+   "name": "Coinflip",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Flip a coin every 10 sec. You either deal +100% or -50% weapon damage.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 100,
+     "unit": "%",
+     "note": "coin win"
+    },
+    {
+     "stat": "damage",
+     "value": -50,
+     "unit": "%",
+     "note": "coin loss"
+    },
+    {
+     "stat": "interval",
+     "value": 10,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "double-down",
+   "name": "Double Down",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Gain +30% shield points from all sources.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "shieldGain",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "dwarf",
+   "name": "Dwarf",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "You are small. Gain movespeed, attack speed and lower gravity.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "mission_loot"
+   ],
+   "stats": []
+  },
+  {
+   "id": "extra-dash",
+   "name": "Extra Dash",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "+1 Dash.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "extraDashes",
+     "value": 1,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "giant",
+   "name": "Giant",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "You are big. Gain health, weapon damage and spell cooldown reduction.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "mission_loot"
+   ],
+   "stats": []
+  },
+  {
+   "id": "glass-cannon",
+   "name": "Glass Cannon",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 2,
+   "effect": "+40% weapon and melee damage, but -25% HP.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 40,
+     "unit": "%"
+    },
+    {
+     "stat": "meleeDamage",
+     "value": 40,
+     "unit": "%"
+    },
+    {
+     "stat": "maxHp",
+     "value": -25,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "goliath",
+   "name": "Goliath",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "You are bigger. Gain +25% HP.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "maxHp",
+     "value": 25,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "joker-trick",
+   "name": "Joker Trick",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Gain +7% damage and attack speed for every distinct joker rarity equipped on the weapon.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 7,
+     "unit": "%",
+     "note": "per distinct rarity on the weapon"
+    },
+    {
+     "stat": "attackSpeed",
+     "value": 7,
+     "unit": "%",
+     "note": "per distinct rarity on the weapon"
+    }
+   ]
+  },
+  {
+   "id": "machine-gun",
+   "name": "Machine Gun",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Per mission, the weapon gains +0.3% attack speed for every 50 damage dealt.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow",
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "attackSpeed",
+     "value": 0.3,
+     "unit": "%",
+     "note": "per 50 damage dealt, per mission"
+    }
+   ]
+  },
+  {
+   "id": "ricochet",
+   "name": "Ricochet",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "The fired bullet ricochets, with a 30% chance to automatically hit a nearby enemy.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "ricochetChance",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "speedster",
+   "name": "Speedster",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "+1% damage and attack speed per 3% bonus move speed, up to +40%.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 1,
+     "unit": "%",
+     "note": "per 3% bonus move speed"
+    },
+    {
+     "stat": "attackSpeed",
+     "value": 1,
+     "unit": "%",
+     "note": "per 3% bonus move speed"
+    },
+    {
+     "stat": "maxBonus",
+     "value": 40,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "spell-roulette",
+   "name": "Spell Roulette",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "-20% spell cooldown, but spells are randomized on each cast.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldown",
+     "value": -20,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "toolbox",
+   "name": "Toolbox",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Utility pickups are disabled. Your utility automatically refills after 90 sec.",
+   "scope": "hero",
+   "weapons": [],
+   "obtain": [
+    "shop",
+    "gamba_machine"
+   ],
+   "stats": [
+    {
+     "stat": "utilityRefillTime",
+     "value": 90,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "vampire",
+   "name": "Vampire",
+   "tier": "legendary",
+   "soulCost": 1200,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "The weapon gains +4% lifesteal. Melee hits and damage to Cryptic Train and Cryptic Saloon trigger the healing. Lifesteal uses damage dealt and excludes overkill damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo",
+    "Boomerang",
+    "Bow",
+    "Dual Revolvers",
+    "Knuckles",
+    "Lasso",
+    "Leveredge",
+    "Long Ranger",
+    "Minigun",
+    "Quad Cylinder",
+    "Revolver",
+    "Sheriff Star",
+    "Shotgun",
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop",
+    "gamba_machine",
+    "mission_loot"
+   ],
+   "stats": [
+    {
+     "stat": "lifesteal",
+     "value": 4,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "aiming-burst",
+   "name": "Aiming Burst",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "+30% weakspot damage and piercing bullets while aiming.",
+   "scope": "weapon",
+   "weapons": [
+    "Quad Cylinder"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "weakspotDamage",
+     "value": 30,
+     "unit": "%",
+     "note": "while aiming"
+    }
+   ]
+  },
+  {
+   "id": "bardbarian",
+   "name": "Bardbarian",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Hold the slam attack longer to release a more powerful blow.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "chonky-throw",
+   "name": "Chonky Throw",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "The boomerang is twice as big and passes through the shields.",
+   "scope": "weapon",
+   "weapons": [
+    "Boomerang"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "boomerangSize",
+     "value": 2,
+     "unit": "x"
+    }
+   ]
+  },
+  {
+   "id": "crash-pack",
+   "name": "Crash Pack",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Double the fuel ammo, but half the flight duration.",
+   "scope": "weapon",
+   "weapons": [
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "fuelAmmo",
+     "value": 2,
+     "unit": "x"
+    },
+    {
+     "stat": "flightDuration",
+     "value": 0.5,
+     "unit": "x"
+    }
+   ]
+  },
+  {
+   "id": "eagle-lever",
+   "name": "Eagle Lever",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Consecutive shots without missing grant +10% damage, stacking up to +50%.",
+   "scope": "weapon",
+   "weapons": [
+    "Leveredge"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 10,
+     "unit": "%",
+     "note": "per consecutive hit without missing"
+    },
+    {
+     "stat": "maxDamage",
+     "value": 50,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "eco-trick",
+   "name": "Eco Trick",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Reloading no longer wastes ammo.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "elemental-spin",
+   "name": "Elemental Spin",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "The minigun has a 30% chance to fire a random elemental bullet instead of a regular one.",
+   "scope": "weapon",
+   "weapons": [
+    "Minigun"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "elementalBulletChance",
+     "value": 30,
+     "unit": "%"
+    }
+   ]
+  },
+  {
+   "id": "fanning-ace",
+   "name": "Fanning Ace",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Fire mid-reload at the right moment to chain-fire all bullets.",
+   "scope": "weapon",
+   "weapons": [
+    "Revolver"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "fist-rage",
+   "name": "Fist Rage",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Taking damage generates charge and grants +30% attack speed for 2 sec.",
+   "scope": "weapon",
+   "weapons": [
+    "Knuckles"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "attackSpeed",
+     "value": 30,
+     "unit": "%",
+     "note": "after taking damage"
+    },
+    {
+     "stat": "duration",
+     "value": 2,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "fist-ro-dah",
+   "name": "Fist Ro Dah",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "The charged attack propels you backwards and always applies Frost to enemies.",
+   "scope": "weapon",
+   "weapons": [
+    "Knuckles"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "focus-shot",
+   "name": "Focus Shot",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Every weakspot hit reduces the cooldown of your spells by 2 sec.",
+   "scope": "weapon",
+   "weapons": [
+    "Long Ranger"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "spellCooldownReduction",
+     "value": 2,
+     "unit": "sec",
+     "note": "per weakspot hit"
+    }
+   ]
+  },
+  {
+   "id": "frenzy-spin",
+   "name": "Frenzy Spin",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "While your kill counter is above 10, the minigun fires twice as fast.",
+   "scope": "weapon",
+   "weapons": [
+    "Minigun"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "fireRate",
+     "value": 2,
+     "unit": "x",
+     "note": "while kill counter above 10"
+    },
+    {
+     "stat": "killCounterThreshold",
+     "value": 10,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "homing-burst",
+   "name": "Homing Burst",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Every 8 bullets fired, shoot 2 homing bullets at nearby enemies.",
+   "scope": "weapon",
+   "weapons": [
+    "Quad Cylinder"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "homingBullets",
+     "value": 2,
+     "unit": "flat",
+     "note": "every 8 bullets fired"
+    },
+    {
+     "stat": "bulletsPerBurst",
+     "value": 8,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "hover-pack",
+   "name": "Hover Pack",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Divebomb is replaced with a fuel-powered hover boost that swaps to your main weapon and lasts 5 seconds.",
+   "scope": "weapon",
+   "weapons": [
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "hoverDuration",
+     "value": 5,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "jump-star",
+   "name": "Jump Star",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "+2 Jumps while holding the Sheriff Stars.",
+   "scope": "weapon",
+   "weapons": [
+    "Sheriff Star"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "extraJumps",
+     "value": 2,
+     "unit": "flat",
+     "note": "while holding Sheriff Stars"
+    }
+   ]
+  },
+  {
+   "id": "lingering-throw",
+   "name": "Lingering Throw",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Doubles the lingering time. Combines with Lingering Time upgrade.",
+   "scope": "weapon",
+   "weapons": [
+    "Boomerang"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "lingerTime",
+     "value": 2,
+     "unit": "x"
+    }
+   ]
+  },
+  {
+   "id": "lullabard",
+   "name": "Lullabard",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Gain an extra chord per hit and a wider healing zone, but lose the slam attack.",
+   "scope": "weapon",
+   "weapons": [
+    "Banjo"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "mark-ace",
+   "name": "Mark Ace",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Bullets mark enemies for 5 sec. Marked enemies take +15% damage.",
+   "scope": "weapon",
+   "weapons": [
+    "Revolver"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "markedDamageTaken",
+     "value": 15,
+     "unit": "%",
+     "note": "marked enemies"
+    },
+    {
+     "stat": "markDuration",
+     "value": 5,
+     "unit": "sec"
+    }
+   ]
+  },
+  {
+   "id": "mindshot",
+   "name": "Mindshot",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 6,
+   "maxStack": 1,
+   "effect": "Weakspot hits cause an explosion.",
+   "scope": "weapon",
+   "weapons": [
+    "Long Ranger"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "overblast",
+   "name": "Overblast",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Shoots an extra pellet for every 4 missing shots in the magazine.",
+   "scope": "weapon",
+   "weapons": [
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "extraPellets",
+     "value": 1,
+     "unit": "flat",
+     "note": "per 4 missing shots in the magazine"
+    }
+   ]
+  },
+  {
+   "id": "overdraw",
+   "name": "Overdraw",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 5,
+   "maxStack": 1,
+   "effect": "Charge for 2 sec. to fire 3 arrows in a cone. Attack speed reduces charge time.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "chargeTime",
+     "value": 2,
+     "unit": "sec",
+     "note": "attack speed reduces it"
+    },
+    {
+     "stat": "arrows",
+     "value": 3,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "rush-blast",
+   "name": "Rush Blast",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "The first 3 bullets in your magazine have 100% accuracy and shoot further away.",
+   "scope": "weapon",
+   "weapons": [
+    "Shotgun"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "accuracy",
+     "value": 100,
+     "unit": "%",
+     "note": "first 3 bullets"
+    },
+    {
+     "stat": "bullets",
+     "value": 3,
+     "unit": "flat"
+    }
+   ]
+  },
+  {
+   "id": "scavenger-star",
+   "name": "Scavenger Star",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Gain +100% pickup range. Gain +30% move speed while holding the Sheriff Stars.",
+   "scope": "weapon",
+   "weapons": [
+    "Sheriff Star"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "pickupRange",
+     "value": 100,
+     "unit": "%"
+    },
+    {
+     "stat": "moveSpeed",
+     "value": 30,
+     "unit": "%",
+     "note": "while holding Sheriff Stars"
+    }
+   ]
+  },
+  {
+   "id": "sky-lash",
+   "name": "Sky Lash",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "The charged attack grants +50% move speed and lets you fly. It also triggers when attacking empty air and preserves your momentum.",
+   "scope": "weapon",
+   "weapons": [
+    "Lasso"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "moveSpeed",
+     "value": 50,
+     "unit": "%",
+     "note": "charged attack"
+    }
+   ]
+  },
+  {
+   "id": "spell-lash",
+   "name": "Spell Lash",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 3,
+   "maxStack": 1,
+   "effect": "Casting a spell instantly fills your charge bar.",
+   "scope": "weapon",
+   "weapons": [
+    "Lasso"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "stacked-lever",
+   "name": "Stacked Lever",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Instantly reload 2 bullets from your reserve ammo on kill.",
+   "scope": "weapon",
+   "weapons": [
+    "Leveredge"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "reloadOnKill",
+     "value": 2,
+     "unit": "flat",
+     "note": "bullets from reserve"
+    }
+   ]
+  },
+  {
+   "id": "swamp-trick",
+   "name": "Swamp Trick",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Reload explosions now leave puddles on the ground.",
+   "scope": "weapon",
+   "weapons": [
+    "Dual Revolvers"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "trail-pack",
+   "name": "Trail Pack",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 2,
+   "maxStack": 1,
+   "effect": "Your jetpack trail leaves elemental puddles.",
+   "scope": "weapon",
+   "weapons": [
+    "Jetpack"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": []
+  },
+  {
+   "id": "ultra-draw",
+   "name": "Ultra Draw",
+   "tier": "unique",
+   "soulCost": 0,
+   "slotCost": 4,
+   "maxStack": 1,
+   "effect": "Charge for 4 sec. to fire a massive explosive arrow. Attack speed reduces charge time.",
+   "scope": "weapon",
+   "weapons": [
+    "Bow"
+   ],
+   "obtain": [
+    "shop"
+   ],
+   "stats": [
+    {
+     "stat": "chargeTime",
+     "value": 4,
+     "unit": "sec",
+     "note": "attack speed reduces it"
+    }
+   ]
+  }
+ ]
+}
