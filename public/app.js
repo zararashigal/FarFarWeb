@@ -7,6 +7,7 @@ const searchText = new Map(catalog.jokers.map(joker =>
 const weapons = [...new Set(catalog.jokers.flatMap(joker => joker.weapons))].sort();
 const tiers = ['normal', 'fine', 'prime', 'mythic', 'legendary', 'unique'];
 const MAX_SLOTS = 16;
+const MAX_UPGRADE_SLOTS = 26;
 const $ = id => document.getElementById(id);
 
 const labels = {
@@ -31,6 +32,13 @@ const statFamilies = [
   [['damageTaken', 'shield', 'shieldGain', 'minShield', 'healingReceived', 'shieldCost', 'shieldDecay'], '#35c9d6', 'shield']
 ];
 const family = stat => statFamilies.find(group => group[0].includes(stat)) ?? [null, '#d9a441', 'generic'];
+const upgradeStats = [
+  { id: 'ammoBag', stat: 'ammoBag', label: 'Ammo Bag', perPoint: 5, max: 16, unit: '%' },
+  { id: 'health', stat: 'maxHp', label: 'Health', perPoint: 5, max: 6, unit: '%', displayUnit: '' },
+  { id: 'spellCooldown', stat: 'spellCooldown', label: 'Spell Cooldown Reduction', perPoint: 2, max: 6, unit: '%', totalSign: -1 },
+  { id: 'speed', stat: 'moveSpeed', label: 'Speed', perPoint: 4, max: 6, unit: '%' },
+  { id: 'jumpHeight', stat: 'jumpHeight', label: 'Jump Height', perPoint: 7, max: 6, unit: '%' }
+];
 
 const statIcon = icon => {
   const icons = {
@@ -52,7 +60,19 @@ const statClass = (stat, value) => ((value > 0) !== invertedStats.has(stat) ? 'p
 const tierColors = { normal: '#a7adb3', fine: '#7ccf6b', prime: '#4ea7f0', mythic: '#c070f0', legendary: '#f2a516', unique: '#ff5b4f' };
 const soulIcon = '<svg class="soul-icon" viewBox="80 85 240 315" role="img" aria-label="Souls"><path d="M 213 92 C 188 112, 174 134, 182 152 C 188 164, 200 168, 198 180 C 194 196, 162 216, 132 232 L 256 290 L 223 356 C 192 344, 152 324, 156 300 C 159 283, 178 282, 186 293 C 191 300, 189 310, 185 316 C 202 315, 212 298, 207 281 C 200 260, 168 248, 134 244 L 88 302 C 128 340, 178 370, 236 392 L 313 271 L 216 226 C 238 214, 248 194, 242 174 C 235 154, 212 142, 207 124 C 204 113, 207 102, 213 92 Z"/></svg>';
 
-const freshPlan = () => ({ name: '', rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
+const freshUpgrades = () => ({ ammoBag: 0, health: 0, spellCooldown: 0, speed: 0, jumpHeight: 0 });
+const upgradeSlotCount = upgrades => upgradeStats.reduce((total, stat) => total + upgrades[stat.id], 0);
+const normalizeUpgrades = upgrades => {
+  const normalized = freshUpgrades();
+  let remaining = MAX_UPGRADE_SLOTS;
+  for (const stat of upgradeStats) {
+    const points = Number.isInteger(upgrades?.[stat.id]) ? upgrades[stat.id] : 0;
+    normalized[stat.id] = Math.max(0, Math.min(points, stat.max, remaining));
+    remaining -= normalized[stat.id];
+  }
+  return normalized;
+};
+const freshPlan = () => ({ name: '', upgrades: freshUpgrades(), rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
 
 const bytesToBase64 = bytes => {
   let binary = '';
@@ -71,6 +91,7 @@ const base64ToBytes = value => {
 const restorePlan = state => ({
   ...freshPlan(),
   name: typeof state.name === 'string' ? state.name.slice(0, 12) : '',
+  upgrades: normalizeUpgrades(state.upgrades),
   rails: state.rails,
   active: 0
 });
@@ -93,6 +114,7 @@ const hasOverLimitSharedPlan = Array.isArray(loadedPlan?.rails) &&
   loadedPlan.rails.some(rail => rail.slotsMax > MAX_SLOTS);
 let plan = hasOverLimitSharedPlan ? freshPlan() : (loadedPlan ?? freshPlan());
 let previousStats = {};
+let previousTotals = {};
 const hasInvalidSlotLimit = () => plan.rails.some(rail =>
   !Number.isFinite(rail.slotsMax ?? DEFAULT_SLOTS) ||
   (rail.slotsMax ?? DEFAULT_SLOTS) < 1 ||
@@ -101,7 +123,7 @@ let saveVersion = 0;
 const savePlan = async () => {
   if (hasInvalidSlotLimit()) return false;
   const version = ++saveVersion;
-  const state = JSON.stringify({ name: plan.name, rails: plan.rails });
+  const state = JSON.stringify({ name: plan.name, upgrades: plan.upgrades, rails: plan.rails });
   if ('CompressionStream' in window) {
     const stream = new Blob([state]).stream().pipeThrough(new CompressionStream('deflate'));
     const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
@@ -115,6 +137,16 @@ const savePlan = async () => {
 
 const activeRail = () => plan.rails[plan.active];
 const countOf = (rail, id) => rail.jokers.find(joker => joker.id === id)?.count ?? 0;
+const setUpgrade = (id, direction) => {
+  const stat = upgradeStats.find(entry => entry.id === id);
+  if (!stat) return false;
+  const current = plan.upgrades[id];
+  const next = current + direction;
+  if (next < 0 || next > stat.max) return false;
+  if (direction > 0 && upgradeSlotCount(plan.upgrades) >= MAX_UPGRADE_SLOTS) return false;
+  plan.upgrades[id] = next;
+  return true;
+};
 const slotsUsedOnRail = rail => rail.jokers.reduce((total, entry) =>
   total + (jokerById.get(entry.id)?.slotCost ?? 0) * (entry.count ?? 1), 0);
 const canSetCount = (rail, joker, count) => {
@@ -214,6 +246,29 @@ function slotCircles(rail, stats) {
   return html;
 }
 
+function renderUpgrades() {
+  const total = upgradeSlotCount(plan.upgrades);
+  const totalPips = Array.from({ length: MAX_UPGRADE_SLOTS }, (_, index) =>
+    `<i class="upgrade-total-pip ${index < total ? 'on' : ''}"></i>`).join('');
+  const rows = upgradeStats.map(stat => {
+    const points = plan.upgrades[stat.id], [, color, glyph] = family(stat.stat);
+    const value = points * stat.perPoint;
+    const pips = Array.from({ length: stat.max }, (_, index) =>
+      `<i class="upgrade-pip ${index < points ? 'on' : ''}"></i>`).join('');
+    return `<div class="upgrade-row" style="--c:${color}">
+      <span class="upgrade-label"><span class="upgrade-icon">${statIcon(glyph)}</span><span>${stat.label}</span></span>
+      <span class="upgrade-value">+${value}${stat.displayUnit ?? stat.unit}</span>
+      <button class="upgrade-arrow" data-upgrade="${stat.id}" data-d="-1" ${points === 0 ? 'disabled' : ''}>&lt;</button>
+      <span class="upgrade-pips">${pips}</span>
+      <button class="upgrade-arrow" data-upgrade="${stat.id}" data-d="1" ${points >= stat.max || total >= MAX_UPGRADE_SLOTS ? 'disabled' : ''}>&gt;</button>
+    </div>`;
+  }).join('');
+  return `<div class="upgrade-panel">
+    <div class="upgrade-head"><span class="upgrade-title">Upgrade slots</span><div class="upgrade-total-pips">${totalPips}</div><span class="upgrade-count">${total}/${MAX_UPGRADE_SLOTS}</span></div>
+    ${rows}
+  </div>`;
+}
+
 function renderRail(build) {
   const rail = activeRail(), stats = build[plan.active];
   $('railTitle').textContent = rail.type === 'hero' ? 'Hero' : (rail.weapon || 'Weapon');
@@ -222,6 +277,7 @@ function renderRail(build) {
   const pips = Array.from({ length: pipCount }, (_, index) =>
     `<i class="pip ${index < stats.slotsUsed ? (stats.slotsUsed > stats.slotsMax ? 'over' : 'on') : ''}"></i>`).join('');
   $('rail').innerHTML = `
+    ${rail.type === 'hero' ? renderUpgrades() : ''}
     <div class="pipwrap"><span class="l">Joker slots</span><div class="pips">${pips}</div><span class="cnt">${stats.slotsUsed}/${stats.slotsMax}</span></div>
     ${rail.type === 'weapon' ? `<div class="setrow"><span class="l">Weapon</span>${stepper('weaponStep', rail.weapon)}</div>` : ''}
     <div class="setrow"><span class="l">Unlocked slots</span>${stepper('slotStep', stats.slotsMax)}${rail.type === 'weapon' ? '<button class="btn" id="delRail">Remove</button>' : ''}</div>
@@ -260,6 +316,9 @@ function renderRail(build) {
     const amount = button.dataset.p ? 1 : -1;
     if (setCount(rail, id, countOf(rail, id) + amount)) update();
   });
+  $('rail').querySelectorAll('[data-upgrade]').forEach(button => button.onclick = () => {
+    if (setUpgrade(button.dataset.upgrade, +button.dataset.d)) update();
+  });
   $('rail').querySelectorAll('[data-focus]').forEach(button => button.onclick = () => $('q')?.focus());
 }
 
@@ -277,6 +336,18 @@ function renderStats(build) {
   for (const bonus of Object.values(bonuses.passive)) {
     currentStats[`${bonus.stat}|${bonus.unit}`] = bonus;
   }
+  const totalStats = { ...currentStats };
+  for (const stat of upgradeStats) {
+    const points = plan.upgrades[stat.id];
+    if (!points) continue;
+    const unit = stat.totalUnit ?? stat.unit;
+    const key = `${stat.stat}|${unit}`;
+    totalStats[key] = {
+      stat: stat.stat,
+      unit,
+      value: (totalStats[key]?.value ?? 0) + points * stat.perPoint * (stat.totalSign ?? 1)
+    };
+  }
 
   const oldStats = previousStats[plan.active] ?? {};
   const hasPrevious = Object.keys(oldStats).length > 0;
@@ -289,15 +360,28 @@ function renderStats(build) {
     const changed = hasPrevious && value !== oldValue;
     return statRow(stat, unit, value, changed ? { changed, was: oldValue } : {});
   }).join('');
+  const oldTotals = previousTotals[plan.active] ?? {};
+  const hasPreviousTotal = Object.keys(oldTotals).length > 0;
+  const totalKeys = Object.keys(totalStats).sort((a, b) =>
+    label(a.split('|')[0]).localeCompare(label(b.split('|')[0])));
+  const totalRows = totalKeys.map(key => {
+    const [stat, unit] = key.split('|');
+    const value = totalStats[key]?.value ?? 0;
+    const oldValue = oldTotals[key]?.value ?? 0;
+    const changed = hasPreviousTotal && value !== oldValue;
+    return statRow(stat, unit, value, changed ? { changed, was: oldValue } : {});
+  }).join('');
   const conditional = bonuses.conditional
     .map(bonus => statRow(bonus.stat, bonus.unit, bonus.value, { note: bonus.note }))
     .join('');
   const rail = activeRail();
   $('stats').innerHTML = `
     <div class="hint">${rail.type === 'weapon' ? `${rail.weapon || 'Weapon'} rail combined with Hero rail.` : 'Hero rail.'} Bonuses are added together.</div>
+    <h3>Total</h3>${totalRows || '<div class="empty">No stat bonuses or base upgrades.</div>'}
     <h3>Always active</h3>${rows || '<div class="empty">No flat stat bonuses.</div>'}
     <h3>Conditional / scaling</h3>${conditional || '<div class="empty">None.</div>'}`;
   previousStats[plan.active] = currentStats;
+  previousTotals[plan.active] = totalStats;
 }
 
 function update() {
@@ -336,6 +420,7 @@ $('buildName').oninput = event => {
 $('reset').onclick = () => {
   plan = freshPlan();
   previousStats = {};
+  previousTotals = {};
   renderAll();
 };
 
