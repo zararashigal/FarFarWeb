@@ -1,7 +1,19 @@
 import { calcBuild, indexJokers, DEFAULT_SLOTS } from './calc.js';
 
 const catalog = await (await fetch('jokers.json')).json();
+const spellData = await (await fetch('/api/spells')).json();
 const jokerById = indexJokers(catalog.jokers);
+const spellById = new Map(spellData.spells.map(spell => [spell.id, spell]));
+const spellSchoolById = new Map(spellData.schools.map(school => [school.id, school]));
+let totalSpellCooldown = 0;
+const spellCooldownText = spell => {
+  const cooldown = Math.max(0, spell.cooldown * (1 + totalSpellCooldown / 100));
+  return totalSpellCooldown
+    ? `${+cooldown.toFixed(2)}s cooldown (${spell.cooldown}s base)`
+    : `${spell.cooldown}s cooldown`;
+};
+const spellMetaText = spell =>
+  `${spellSchoolById.get(spell.school)?.name ?? spell.school} · ${spellCooldownText(spell)}`;
 const searchText = new Map(catalog.jokers.map(joker =>
   [joker.id, `${joker.name} ${joker.effect}`.toLowerCase()]));
 const weapons = [...new Set(catalog.jokers.flatMap(joker => joker.weapons))].sort();
@@ -9,6 +21,7 @@ const tiers = ['normal', 'fine', 'prime', 'mythic', 'legendary', 'unique'];
 const MAX_SLOTS = 16;
 const MAX_UPGRADE_SLOTS = 26;
 const MAX_WEAPON_RAILS = 2;
+const SPELL_SLOT_COUNT = 3;
 const $ = id => document.getElementById(id);
 
 const labels = {
@@ -54,6 +67,24 @@ const statIcon = icon => {
   };
   return `<svg viewBox="${icon === 'movement' ? '0 0 24 24' : '0 0 32 32'}" aria-hidden="true">${icons[icon] ?? icons.generic}</svg>`;
 };
+const spellGlyphs = {
+  acid: '<path d="M16 3C13 8 8 14 8 20a8 8 0 0 0 16 0c0-6-5-12-8-17z"/><path d="M13 21c0-2 2-5 3-6" fill="none" stroke="#1a1006" stroke-width="2"/>',
+  cactus: '<path d="M13 28V12a3 3 0 0 1 6 0v16h-6zM13 20h-3a4 4 0 0 1-4-4v-3h4v3h3zm6-5h3a4 4 0 0 0 4-4V8h-4v3h-3z"/>',
+  elec: '<path d="m18 2-9 16h7l-2 12 11-18h-7z"/>',
+  fire: '<path d="M18 2c1 7-5 8-3 13 1-2 3-3 5-5 5 7 7 11 4 16a10 10 0 0 1-18-5c0-5 4-9 8-13 0 5 2 6 3 7 2-4 3-8 1-13z"/>',
+  frost: '<path d="M16 3v26M4.7 9.5l22.6 13M4.7 22.5l22.6-13M12 5l4 4 4-4M12 27l4-4 4 4M5 14l5-1-1-5M27 18l-5 1 1 5M5 18l5 1-1 5M27 14l-5-1 1-5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>',
+  voodoo: '<path d="M16 3a11 11 0 0 0-7 19v5h14v-5a11 11 0 0 0-7-19zm-4 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm8 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-7 8h6l-3 3z"/>'
+};
+const schoolColors = {
+  acid: '#8ed21f',
+  cactus: '#9be15d',
+  elec: '#2f9bff',
+  fire: '#f0683a',
+  frost: '#35c9d6',
+  voodoo: '#b43ff0'
+};
+const spellIcon = school => `<svg viewBox="0 0 32 32" aria-hidden="true">${spellGlyphs[school] ?? spellGlyphs.acid}</svg>`;
+const emptySpellIcon = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M15 5h2v22h-2zM5 15h22v2H5z"/></svg>';
 const units = { '%': '%', flat: '', hp: ' HP', sp: ' SP', sec: ' s', x: '×', 'hp/sec': ' HP/s' };
 const formatStat = (value, unit) => `${unit !== 'x' && value > 0 ? '+' : ''}${+value.toFixed(2)}${units[unit] ?? ''}`;
 const invertedStats = new Set(['gravity', 'damageTaken', 'spellCooldown', 'shieldDecay']);
@@ -73,7 +104,11 @@ const normalizeUpgrades = upgrades => {
   }
   return normalized;
 };
-const freshPlan = () => ({ name: '', upgrades: freshUpgrades(), rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
+const normalizeSpells = spells => Array.from({ length: SPELL_SLOT_COUNT }, (_, index) => {
+  const id = Array.isArray(spells) && typeof spells[index] === 'string' ? spells[index] : '';
+  return spellById.has(id) ? id : '';
+});
+const freshPlan = () => ({ name: '', upgrades: freshUpgrades(), spells: normalizeSpells(), rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
 
 const bytesToBase64 = bytes => {
   let binary = '';
@@ -127,6 +162,7 @@ const restorePlan = state => {
     ...freshPlan(),
     name: typeof state?.name === 'string' ? state.name.slice(0, 12) : '',
     upgrades: normalizeUpgrades(state?.upgrades),
+    spells: normalizeSpells(state?.spells),
     rails,
     active: 0
   };
@@ -159,7 +195,7 @@ let saveVersion = 0;
 const savePlan = async () => {
   if (hasInvalidSlotLimit()) return false;
   const version = ++saveVersion;
-  const state = JSON.stringify({ name: plan.name, upgrades: plan.upgrades, rails: plan.rails });
+  const state = JSON.stringify({ name: plan.name, upgrades: plan.upgrades, spells: plan.spells, rails: plan.rails });
   if ('CompressionStream' in window) {
     const stream = new Blob([state]).stream().pipeThrough(new CompressionStream('deflate'));
     const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
@@ -220,6 +256,179 @@ function renderFilters() {
     renderCatalog();
   });
 }
+
+let activeSpellSlot = -1;
+
+function closeSpellPicker() {
+  const container = $('spellSlots');
+  container?.querySelectorAll('.spell-slot-wrap.open').forEach(wrapper => {
+    wrapper.classList.remove('open');
+    wrapper.querySelector('.spell-slot').setAttribute('aria-expanded', 'false');
+  });
+  container?.querySelector('.spell-picker')?.classList.remove('open');
+  activeSpellSlot = -1;
+}
+
+function renderSpells() {
+  const container = $('spellSlots');
+  container.replaceChildren();
+  activeSpellSlot = -1;
+  const wrappers = [];
+
+  for (let index = 0; index < SPELL_SLOT_COUNT; index++) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'spell-slot-wrap';
+    const button = document.createElement('button');
+    button.className = 'spell-slot';
+    button.type = 'button';
+    button.setAttribute('aria-expanded', 'false');
+    const tooltip = document.createElement('div');
+    tooltip.className = 'spell-tooltip';
+    tooltip.id = `spellTooltip${index}`;
+    tooltip.setAttribute('role', 'tooltip');
+    const spellName = document.createElement('strong');
+    const spellMeta = document.createElement('span');
+    spellMeta.className = 'spell-meta';
+    const spellEffect = document.createElement('span');
+    spellEffect.className = 'spell-effect';
+    tooltip.append(spellName, spellMeta, spellEffect);
+
+    wrapper.append(button, tooltip);
+    container.append(wrapper);
+    wrappers.push({ wrapper, button, tooltip });
+
+    const updateSlot = () => {
+      const spell = spellById.get(plan.spells[index]);
+      button.classList.toggle('filled', Boolean(spell));
+      button.innerHTML = spell ? spellIcon(spell.school) : emptySpellIcon;
+      button.style.setProperty('--c', spell ? schoolColors[spell.school] : 'var(--gold)');
+      button.setAttribute('aria-controls', 'spellPicker');
+      button.setAttribute('aria-label', spell
+        ? `Spell slot ${index + 1}: ${spell.name}`
+        : `Choose a spell for slot ${index + 1}`);
+      button.setAttribute('aria-describedby', tooltip.id);
+      spellName.textContent = spell?.name ?? `Spell slot ${index + 1}`;
+      spellMeta.textContent = spell
+        ? spellMetaText(spell)
+        : 'Choose a spell';
+      spellEffect.textContent = spell?.effect ?? '';
+    };
+    updateSlot();
+    button.onclick = () => {
+      const wasOpen = activeSpellSlot === index;
+      closeSpellPicker();
+      if (wasOpen) return;
+      activeSpellSlot = index;
+      wrapper.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      const picker = container.querySelector('.spell-picker');
+      picker.classList.add('open');
+      picker.style.top = window.matchMedia('(max-width: 1000px)').matches
+        ? `${container.offsetHeight + 8}px`
+        : `${wrapper.offsetTop}px`;
+      picker.querySelector('label').textContent = `Spell slot ${index + 1}`;
+      const select = picker.querySelector('select');
+      select.setAttribute('aria-label', `Choose spell for slot ${index + 1}`);
+      select.value = plan.spells[index];
+      updatePickerInfo();
+      select.focus();
+    };
+  }
+
+  const picker = document.createElement('div');
+  picker.className = 'spell-picker';
+  picker.id = 'spellPicker';
+  const title = document.createElement('label');
+  title.htmlFor = 'spellPickerSelect';
+  title.textContent = 'Choose spell';
+  const select = document.createElement('select');
+  select.id = title.htmlFor;
+  const empty = document.createElement('option');
+  empty.value = '';
+  empty.textContent = 'Choose spell';
+  select.append(empty);
+  for (const school of spellData.schools) {
+    const group = document.createElement('optgroup');
+    group.label = school.name;
+    for (const id of school.spells) {
+      const spell = spellById.get(id);
+      if (!spell) continue;
+      const option = document.createElement('option');
+      option.value = spell.id;
+      option.textContent = spell.name;
+      group.append(option);
+    }
+    select.append(group);
+  }
+  const info = document.createElement('div');
+  info.className = 'spell-picker-info';
+  const meta = document.createElement('span');
+  meta.className = 'spell-meta';
+  const effect = document.createElement('span');
+  effect.className = 'spell-effect';
+  info.append(meta, effect);
+  picker.append(title, select, info);
+  container.append(picker);
+
+  const updatePickerInfo = () => {
+    const spell = spellById.get(select.value);
+    meta.textContent = spell
+      ? spellMetaText(spell)
+      : '';
+    effect.textContent = spell?.effect ?? '';
+  };
+  select.onchange = () => {
+    if (activeSpellSlot < 0) return;
+    plan.spells[activeSpellSlot] = select.value;
+    updatePickerInfo();
+    const slot = wrappers[activeSpellSlot];
+    const spell = spellById.get(select.value);
+    slot.button.classList.toggle('filled', Boolean(spell));
+    slot.button.innerHTML = spell ? spellIcon(spell.school) : emptySpellIcon;
+    slot.button.style.setProperty('--c', spell ? schoolColors[spell.school] : 'var(--gold)');
+    slot.button.setAttribute('aria-label', spell
+      ? `Spell slot ${activeSpellSlot + 1}: ${spell.name}`
+      : `Choose a spell for slot ${activeSpellSlot + 1}`);
+    slot.spellName.textContent = spell?.name ?? `Spell slot ${activeSpellSlot + 1}`;
+    slot.spellMeta.textContent = spell
+      ? spellMetaText(spell)
+      : 'Choose a spell';
+    slot.spellEffect.textContent = spell?.effect ?? '';
+    savePlan();
+    closeSpellPicker();
+  };
+
+  for (const slot of wrappers) {
+    slot.spellName = slot.tooltip.querySelector('strong');
+    slot.spellMeta = slot.tooltip.querySelector('.spell-meta');
+    slot.spellEffect = slot.tooltip.querySelector('.spell-effect');
+  }
+}
+
+function updateSpellCooldownDisplays() {
+  const container = $('spellSlots');
+  container?.querySelectorAll('.spell-slot-wrap').forEach((wrapper, index) => {
+    const spell = spellById.get(plan.spells[index]);
+    if (spell) wrapper.querySelector('.spell-meta').textContent = spellMetaText(spell);
+  });
+
+  const select = container?.querySelector('.spell-picker select');
+  const meta = container?.querySelector('.spell-picker-info .spell-meta');
+  const spell = spellById.get(select?.value);
+  if (meta) meta.textContent = spell ? spellMetaText(spell) : '';
+}
+
+document.addEventListener('click', event => {
+  const container = $('spellSlots');
+  if (!container) return;
+  if (!container.contains(event.target)) {
+    closeSpellPicker();
+    return;
+  }
+  if (activeSpellSlot < 0) return;
+  if (event.target instanceof Element && event.target.closest('.spell-picker, .spell-slot')) return;
+  closeSpellPicker();
+});
 
 function renderCatalog() {
   const rail = activeRail(), query = plan.q.toLowerCase();
@@ -361,10 +570,14 @@ function renderRail(build) {
 
 function statRow(stat, unit, value, options = {}) {
   const [, color, glyph] = family(stat);
+  const displayValue = stat === 'spellCooldown' ? Math.abs(value) : value;
+  const previousValue = options.was === undefined
+    ? undefined
+    : stat === 'spellCooldown' ? Math.abs(options.was) : options.was;
   return `<div class="srow ${options.changed ? 'changed' : ''}" style="--c:${color}">
     <span class="ico">${statIcon(glyph)}</span>
     <span class="lbl">${label(stat)}${options.note ? `<small>${options.note}</small>` : ''}</span>
-    <span class="val ${value ? statClass(stat, value) : ''}">${value ? formatStat(value, unit) : '0%'}${options.was !== undefined ? `<em>was ${options.was ? formatStat(options.was, unit) : '0'}</em>` : ''}</span></div>`;
+    <span class="val ${value ? statClass(stat, value) : ''}">${value ? formatStat(displayValue, unit) : '0%'}${previousValue !== undefined ? `<em>was ${previousValue ? formatStat(previousValue, unit) : '0'}</em>` : ''}</span></div>`;
 }
 
 function renderStats(build) {
@@ -419,12 +632,15 @@ function renderStats(build) {
     <h3>Conditional / scaling</h3>${conditional || '<div class="empty">None.</div>'}`;
   previousStats[plan.active] = currentStats;
   previousTotals[plan.active] = totalStats;
+  return totalStats;
 }
 
 function update() {
   const build = calcBuild(catalog, plan.rails, jokerById);
   renderRail(build);
-  renderStats(build);
+  const totalStats = renderStats(build);
+  totalSpellCooldown = totalStats['spellCooldown|%']?.value ?? 0;
+  updateSpellCooldownDisplays();
   renderCatalog();
   renderSoulTotal();
   $('share').disabled = hasInvalidSlotLimit();
@@ -445,6 +661,7 @@ function renderAll() {
   $('buildName').value = plan.name;
   renderTabs();
   renderFilters();
+  renderSpells();
   update();
 }
 

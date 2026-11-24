@@ -1,0 +1,872 @@
+{
+ "meta": {
+  "game": "Far Far West",
+  "spellCount": 30,
+  "snapshot": "2026-11-24"
+ },
+ "schools": [
+  {
+   "id": "acid",
+   "name": "Acid",
+   "masteryJokerId": "acid-mastery",
+   "spells": [
+    "thrower",
+    "geyser",
+    "bubble",
+    "contagion",
+    "rain"
+   ]
+  },
+  {
+   "id": "cactus",
+   "name": "Cactus",
+   "masteryJokerId": "cactus-mastery",
+   "spells": [
+    "mino",
+    "pistolero",
+    "wallo",
+    "decoyo",
+    "bandito"
+   ]
+  },
+  {
+   "id": "elec",
+   "name": "Elec",
+   "masteryJokerId": "elec-mastery",
+   "spells": [
+    "strikes",
+    "boing",
+    "portal",
+    "swap",
+    "thunderstrike"
+   ]
+  },
+  {
+   "id": "fire",
+   "name": "Fire",
+   "masteryJokerId": "pyro-mastery",
+   "spells": [
+    "fireball",
+    "firebeam",
+    "surcharge",
+    "wisp",
+    "finger-guns"
+   ]
+  },
+  {
+   "id": "frost",
+   "name": "Frost",
+   "masteryJokerId": "frost-mastery",
+   "spells": [
+    "breeze",
+    "bridge",
+    "cube",
+    "glaze",
+    "blizzard"
+   ]
+  },
+  {
+   "id": "voodoo",
+   "name": "Voodoo",
+   "masteryJokerId": "voodoo-mastery",
+   "spells": [
+    "drain",
+    "rescue",
+    "corruption",
+    "ritual",
+    "doll"
+   ]
+  }
+ ],
+ "spells": [
+  {
+   "id": "thrower",
+   "name": "Thrower",
+   "school": "acid",
+   "schoolLevel": 1,
+   "cooldown": 30,
+   "xpMultiplier": 1.5,
+   "effect": "Sprays jets of acid that leave corrosive puddles.",
+   "combos": [
+    "acid-dps-burst",
+    "acid-cactus"
+   ],
+   "stats": []
+  },
+  {
+   "id": "geyser",
+   "name": "Geyser",
+   "school": "acid",
+   "schoolLevel": 4,
+   "cooldown": 45,
+   "xpMultiplier": 0.75,
+   "effect": "Erupts on impact and launches enemies into the air.",
+   "combos": [
+    "tornado",
+    "multi-geyser",
+    "exploding-geyser",
+    "healing-candles",
+    "chain-reaction",
+    "acid-cactus"
+   ],
+   "stats": []
+  },
+  {
+   "id": "bubble",
+   "name": "Bubble",
+   "school": "acid",
+   "schoolLevel": 12,
+   "cooldown": 40,
+   "xpMultiplier": 0.75,
+   "effect": "Forms a large acid bubble that bursts into multiple acid puddles.",
+   "combos": [
+    "more-bubble",
+    "tornado",
+    "healing-candles",
+    "chain-reaction",
+    "acid-cactus"
+   ],
+   "stats": []
+  },
+  {
+   "id": "contagion",
+   "name": "Contagion",
+   "school": "acid",
+   "schoolLevel": 20,
+   "cooldown": 70,
+   "xpMultiplier": 1.0,
+   "effect": "Corrodes enemies in a wide zone; affected enemies explode when they die.",
+   "combos": [],
+   "stats": []
+  },
+  {
+   "id": "rain",
+   "name": "Rain",
+   "school": "acid",
+   "schoolLevel": 35,
+   "cooldown": 120,
+   "xpMultiplier": 0.75,
+   "effect": "Creates acid rain over a wide area.",
+   "combos": [
+    "lightning-strikes",
+    "tornado",
+    "healing-candles",
+    "chain-reaction",
+    "acid-cactus"
+   ],
+   "stats": []
+  },
+  {
+   "id": "mino",
+   "name": "Mino",
+   "school": "cactus",
+   "schoolLevel": 1,
+   "cooldown": 7,
+   "xpMultiplier": 1.5,
+   "effect": "Places a mine that explodes when an enemy steps on it.",
+   "combos": [
+    "charged-cactus",
+    "corrupted-cactus",
+    "acid-cactus"
+   ],
+   "stats": [
+    {
+     "stat": "mines",
+     "value": 4,
+     "unit": "flat"
+    },
+    {
+     "stat": "damage",
+     "value": 25,
+     "unit": "flat"
+    },
+    {
+     "stat": "triggerRadius",
+     "value": 5,
+     "unit": "m"
+    },
+    {
+     "stat": "rearmCooldown",
+     "value": 2.5,
+     "unit": "sec",
+     "note": "between explosions"
+    }
+   ]
+  },
+  {
+   "id": "pistolero",
+   "name": "Pistolero",
+   "school": "cactus",
+   "schoolLevel": 4,
+   "cooldown": 40,
+   "xpMultiplier": 1.2,
+   "effect": "Summons a turret that continuously fires at nearby enemies.",
+   "combos": [
+    "charged-cactus",
+    "corrupted-cactus",
+    "acid-cactus",
+    "doubled-pistolero"
+   ],
+   "stats": [
+    {
+     "stat": "turrets",
+     "value": 2,
+     "unit": "flat"
+    },
+    {
+     "stat": "range",
+     "value": 15,
+     "unit": "m"
+    },
+    {
+     "stat": "damagePerShot",
+     "value": 8,
+     "unit": "flat"
+    },
+    {
+     "stat": "rpm",
+     "value": 200,
+     "unit": "flat",
+     "note": "about 27 DPS per turret"
+    }
+   ]
+  },
+  {
+   "id": "wallo",
+   "name": "Wallo",
+   "school": "cactus",
+   "schoolLevel": 12,
+   "cooldown": 40,
+   "xpMultiplier": 1.0,
+   "effect": "Summons a cactus wall whose spikes damage and slow enemies on contact.",
+   "combos": [
+    "charged-cactus",
+    "corrupted-cactus",
+    "acid-cactus"
+   ],
+   "stats": [
+    {
+     "stat": "length",
+     "value": 10,
+     "unit": "m"
+    },
+    {
+     "stat": "damagePerTick",
+     "value": 2,
+     "unit": "flat",
+     "note": "also slows enemies"
+    }
+   ]
+  },
+  {
+   "id": "decoyo",
+   "name": "Decoyo",
+   "school": "cactus",
+   "schoolLevel": 20,
+   "cooldown": 95,
+   "xpMultiplier": 1.2,
+   "effect": "Summons a dancing cactus that lures enemies before exploding.",
+   "combos": [
+    "charged-cactus",
+    "corrupted-cactus",
+    "acid-cactus"
+   ],
+   "stats": []
+  },
+  {
+   "id": "bandito",
+   "name": "Bandito",
+   "school": "cactus",
+   "schoolLevel": 35,
+   "cooldown": 100,
+   "xpMultiplier": 1.0,
+   "effect": "Summons a cactus golem that fights enemies for you.",
+   "combos": [
+    "charged-cactus",
+    "corrupted-cactus",
+    "acid-cactus",
+    "doubled-bandito"
+   ],
+   "stats": []
+  },
+  {
+   "id": "strikes",
+   "name": "Strikes",
+   "school": "elec",
+   "schoolLevel": 1,
+   "cooldown": 20,
+   "xpMultiplier": 1.5,
+   "effect": "Calls down a line of lightning strikes along a path.",
+   "combos": [
+    "electric-wisp",
+    "multi-geyser",
+    "more-bubble",
+    "lightning-strikes",
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "boing",
+   "name": "Boing",
+   "school": "elec",
+   "schoolLevel": 4,
+   "cooldown": 15,
+   "xpMultiplier": 1.0,
+   "effect": "Makes you jump instantly to get out of danger.",
+   "combos": [
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "portal",
+   "name": "Portal",
+   "school": "elec",
+   "schoolLevel": 12,
+   "cooldown": 10,
+   "xpMultiplier": 1.5,
+   "effect": "Creates up to two portals that teleport players and duplicate spell projectiles.",
+   "combos": [
+    "doubled-bandito",
+    "doubled-pistolero",
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "swap",
+   "name": "Swap",
+   "school": "elec",
+   "schoolLevel": 20,
+   "cooldown": 25,
+   "xpMultiplier": 1.25,
+   "effect": "Swaps places with an enemy and explodes at both locations.",
+   "combos": [
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "thunderstrike",
+   "name": "Thunderstrike",
+   "school": "elec",
+   "schoolLevel": 35,
+   "cooldown": 100,
+   "xpMultiplier": 1.0,
+   "effect": "Raises you into the air, then dives down and blasts the area.",
+   "combos": [
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "fireball",
+   "name": "Fireball",
+   "school": "fire",
+   "schoolLevel": 1,
+   "cooldown": 15,
+   "xpMultiplier": 1.5,
+   "effect": "Explodes on impact and leaves burning ground.",
+   "combos": [
+    "exploding-geyser",
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 60,
+     "unit": "flat"
+    },
+    {
+     "stat": "areaOfEffect",
+     "value": 350,
+     "unit": "units",
+     "note": "unit as shown on wiki"
+    }
+   ]
+  },
+  {
+   "id": "firebeam",
+   "name": "Firebeam",
+   "school": "fire",
+   "schoolLevel": 4,
+   "cooldown": 60,
+   "xpMultiplier": 0.75,
+   "effect": "Fires a giant beam that scorches everything along its path.",
+   "combos": [
+    "tornado",
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": [
+    {
+     "stat": "damagePerTick",
+     "value": 15,
+     "unit": "flat"
+    },
+    {
+     "stat": "areaOfEffect",
+     "value": 350,
+     "unit": "units",
+     "note": "unit as shown on wiki"
+    }
+   ]
+  },
+  {
+   "id": "surcharge",
+   "name": "Surcharge",
+   "school": "fire",
+   "schoolLevel": 12,
+   "cooldown": 50,
+   "xpMultiplier": 0.75,
+   "effect": "Burns a wide area and detonates enemies that are already ablaze.",
+   "combos": [
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "wisp",
+   "name": "Wisp",
+   "school": "fire",
+   "schoolLevel": 20,
+   "cooldown": 100,
+   "xpMultiplier": 0.75,
+   "effect": "Summons a burning wisp that jumps to another enemy when its current target dies.",
+   "combos": [
+    "electric-wisp",
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "finger-guns",
+   "name": "Finger Guns",
+   "school": "fire",
+   "schoolLevel": 35,
+   "cooldown": 80,
+   "xpMultiplier": 0.75,
+   "effect": "Replaces your weapon with fingers that shoot explosive fire bullets.",
+   "combos": [
+    "chain-reaction",
+    "charged-cactus",
+    "acid-dps-burst"
+   ],
+   "stats": []
+  },
+  {
+   "id": "breeze",
+   "name": "Breeze",
+   "school": "frost",
+   "schoolLevel": 1,
+   "cooldown": 40,
+   "xpMultiplier": 1.0,
+   "effect": "Freezes enemies in a wide cone without dealing damage.",
+   "combos": [],
+   "stats": []
+  },
+  {
+   "id": "bridge",
+   "name": "Bridge",
+   "school": "frost",
+   "schoolLevel": 4,
+   "cooldown": 25,
+   "xpMultiplier": 1.0,
+   "effect": "Creates a bridge that shields allies who cross it.",
+   "combos": [],
+   "stats": []
+  },
+  {
+   "id": "cube",
+   "name": "Cube",
+   "school": "frost",
+   "schoolLevel": 12,
+   "cooldown": 20,
+   "xpMultiplier": 1.0,
+   "effect": "Turns you or an ally into an invulnerable ice cube.",
+   "combos": [],
+   "stats": []
+  },
+  {
+   "id": "glaze",
+   "name": "Glaze",
+   "school": "frost",
+   "schoolLevel": 20,
+   "cooldown": 80,
+   "xpMultiplier": 1.0,
+   "effect": "Bursts to damage nearby enemies and shield nearby allies.",
+   "combos": [],
+   "stats": []
+  },
+  {
+   "id": "blizzard",
+   "name": "Blizzard",
+   "school": "frost",
+   "schoolLevel": 35,
+   "cooldown": 120,
+   "xpMultiplier": 1.0,
+   "effect": "Follows you, damaging enemies and shielding allies in its area.",
+   "combos": [],
+   "stats": []
+  },
+  {
+   "id": "drain",
+   "name": "Drain",
+   "school": "voodoo",
+   "schoolLevel": 1,
+   "cooldown": 25,
+   "xpMultiplier": 1.3,
+   "effect": "Commands a doll to drain an enemy's health and restore yours.",
+   "combos": [
+    "healing-candles",
+    "corrupted-cactus"
+   ],
+   "stats": [
+    {
+     "stat": "damage",
+     "value": 20,
+     "unit": "flat",
+     "note": "healed back to you"
+    },
+    {
+     "stat": "range",
+     "value": 40,
+     "unit": "m"
+    }
+   ]
+  },
+  {
+   "id": "rescue",
+   "name": "Rescue",
+   "school": "voodoo",
+   "schoolLevel": 4,
+   "cooldown": 60,
+   "xpMultiplier": 0.75,
+   "effect": "Heals or revives the nearest ally.",
+   "combos": [
+    "healing-candles",
+    "corrupted-cactus"
+   ],
+   "stats": [
+    {
+     "stat": "range",
+     "value": 40,
+     "unit": "m",
+     "note": "instant revive if a downed ally is targeted"
+    }
+   ]
+  },
+  {
+   "id": "corruption",
+   "name": "Corruption",
+   "school": "voodoo",
+   "schoolLevel": 12,
+   "cooldown": 35,
+   "xpMultiplier": 0.75,
+   "effect": "Corrupts an enemy so it fights for you.",
+   "combos": [
+    "healing-candles",
+    "corrupted-cactus"
+   ],
+   "stats": [
+    {
+     "stat": "range",
+     "value": 40,
+     "unit": "m"
+    },
+    {
+     "stat": "radius",
+     "value": 5,
+     "unit": "m",
+     "note": "around the target"
+    },
+    {
+     "stat": "duration",
+     "value": 10,
+     "unit": "sec",
+     "note": "immune to friendly fire, then takes damage"
+    },
+    {
+     "stat": "endDamage",
+     "value": 100,
+     "unit": "flat",
+     "note": "when it ends"
+    }
+   ]
+  },
+  {
+   "id": "ritual",
+   "name": "Ritual",
+   "school": "voodoo",
+   "schoolLevel": 20,
+   "cooldown": 100,
+   "xpMultiplier": 1.0,
+   "effect": "Creates a ring of candles that heals allies inside it.",
+   "combos": [
+    "healing-candles"
+   ],
+   "stats": [
+    {
+     "stat": "diameter",
+     "value": 15,
+     "unit": "m"
+    },
+    {
+     "stat": "duration",
+     "value": 10,
+     "unit": "sec"
+    },
+    {
+     "stat": "healPerSec",
+     "value": 5,
+     "unit": "hp/sec",
+     "note": "allies inside"
+    }
+   ]
+  },
+  {
+   "id": "doll",
+   "name": "Doll",
+   "school": "voodoo",
+   "schoolLevel": 35,
+   "cooldown": 110,
+   "xpMultiplier": 1.0,
+   "effect": "Summons a doll that grants allies in its zone invulnerability and high movement speed.",
+   "combos": [
+    "healing-candles"
+   ],
+   "stats": [
+    {
+     "stat": "diameter",
+     "value": 30,
+     "unit": "m"
+    },
+    {
+     "stat": "duration",
+     "value": 10,
+     "unit": "sec"
+    },
+    {
+     "stat": "moveSpeed",
+     "value": 100,
+     "unit": "%",
+     "note": "allies inside, also immune to damage"
+    }
+   ]
+  }
+ ],
+ "combos": [
+  {
+   "id": "acid-dps-burst",
+   "name": "Acid DPS Burst",
+   "requires": "Any Fire or Elec spell first, then Acid Thrower on the affected target",
+   "effect": "The acid detonates into a large continuous damage burst. Reverse order only gives a single tick.",
+   "spells": [
+    "thrower",
+    "strikes",
+    "boing",
+    "portal",
+    "swap",
+    "thunderstrike",
+    "fireball",
+    "firebeam",
+    "surcharge",
+    "wisp",
+    "finger-guns"
+   ]
+  },
+  {
+   "id": "acid-cactus",
+   "name": "Acid Cactus",
+   "requires": "Any Cactus summon + Acid Bubble, Geyser, Rain or Thrower",
+   "effect": "The summon inherits acid damage and coats targets in corrosion.",
+   "spells": [
+    "thrower",
+    "geyser",
+    "bubble",
+    "rain",
+    "mino",
+    "pistolero",
+    "wallo",
+    "decoyo",
+    "bandito"
+   ]
+  },
+  {
+   "id": "tornado",
+   "name": "Tornado",
+   "requires": "Any acid pool + Firebeam",
+   "effect": "Firebeam ignites the acid surface and lifts it into a swirling damage zone.",
+   "spells": [
+    "geyser",
+    "bubble",
+    "rain",
+    "firebeam"
+   ]
+  },
+  {
+   "id": "multi-geyser",
+   "name": "Multi-Geyser",
+   "requires": "Acid Geyser + Elec Strikes",
+   "effect": "Each lightning bolt forks the geyser into a ring of secondary geysers.",
+   "spells": [
+    "geyser",
+    "strikes"
+   ]
+  },
+  {
+   "id": "exploding-geyser",
+   "name": "Exploding Geyser",
+   "requires": "Acid Geyser + Fireball",
+   "effect": "Fireball detonates the geyser column for a heavy area burst.",
+   "spells": [
+    "geyser",
+    "fireball"
+   ]
+  },
+  {
+   "id": "healing-candles",
+   "name": "Healing Candles",
+   "requires": "Any acid pool + any Voodoo spell",
+   "effect": "The pool becomes a friendly healing candle field.",
+   "spells": [
+    "geyser",
+    "bubble",
+    "rain",
+    "drain",
+    "rescue",
+    "corruption",
+    "ritual",
+    "doll"
+   ]
+  },
+  {
+   "id": "chain-reaction",
+   "name": "Chain Reaction",
+   "requires": "Any acid pool + any Fire or Elec spell",
+   "effect": "Fire or Elec damage is transmitted across all connected acid pools.",
+   "spells": [
+    "geyser",
+    "bubble",
+    "rain",
+    "strikes",
+    "boing",
+    "portal",
+    "swap",
+    "thunderstrike",
+    "fireball",
+    "firebeam",
+    "surcharge",
+    "wisp",
+    "finger-guns"
+   ]
+  },
+  {
+   "id": "more-bubble",
+   "name": "More Bubble",
+   "requires": "Acid Bubble + Elec Strikes",
+   "effect": "Charged acid grows a bigger, longer-lasting bubble field.",
+   "spells": [
+    "bubble",
+    "strikes"
+   ]
+  },
+  {
+   "id": "lightning-strikes",
+   "name": "Lightning Strikes",
+   "requires": "Acid Rain + Elec Strikes",
+   "effect": "The rain conducts the lightning and chains strikes across the rain zone.",
+   "spells": [
+    "rain",
+    "strikes"
+   ]
+  },
+  {
+   "id": "electric-wisp",
+   "name": "Electric Wisp",
+   "requires": "Fire Wisp + Elec Strikes",
+   "effect": "The wisp picks up the lightning charge and arcs to nearby targets.",
+   "spells": [
+    "strikes",
+    "wisp"
+   ]
+  },
+  {
+   "id": "charged-cactus",
+   "name": "Charged Cactus",
+   "requires": "Any Cactus summon + any Fire or Elec spell",
+   "effect": "The summon inherits the elemental damage.",
+   "spells": [
+    "mino",
+    "pistolero",
+    "wallo",
+    "decoyo",
+    "bandito",
+    "strikes",
+    "boing",
+    "portal",
+    "swap",
+    "thunderstrike",
+    "fireball",
+    "firebeam",
+    "surcharge",
+    "wisp",
+    "finger-guns"
+   ]
+  },
+  {
+   "id": "corrupted-cactus",
+   "name": "Corrupted Cactus",
+   "requires": "Any Cactus summon + Voodoo Drain, Rescue or Corruption",
+   "effect": "The summon spreads corruption to enemies it hits and releases a corruption wave when the effect ends.",
+   "spells": [
+    "mino",
+    "pistolero",
+    "wallo",
+    "decoyo",
+    "bandito",
+    "drain",
+    "rescue",
+    "corruption"
+   ]
+  },
+  {
+   "id": "doubled-bandito",
+   "name": "Doubled Bandito",
+   "requires": "Elec Portal + Bandito",
+   "effect": "Spells sent through the portal are duplicated, so Bandito is cast twice.",
+   "spells": [
+    "bandito",
+    "portal"
+   ]
+  },
+  {
+   "id": "doubled-pistolero",
+   "name": "Doubled Pistolero",
+   "requires": "Elec Portal + Pistolero",
+   "effect": "A Pistolero sent through the portal spawns a second turret on the other side.",
+   "spells": [
+    "pistolero",
+    "portal"
+   ]
+  }
+ ]
+}

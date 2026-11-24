@@ -5,9 +5,11 @@ import path from 'node:path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const jokers = JSON.parse(readFileSync(path.join(__dirname, 'public', 'jokers.json'), 'utf8')).jokers;
+const spells = JSON.parse(readFileSync(path.join(__dirname, 'spells.json'), 'utf8'));
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/api/spells', (_req, res) => res.json(spells));
 app.get('/api/jokers', (req, res) => {
   const { tier, weapon, scope, q } = req.query;
   const search = q && String(q).toLowerCase();
