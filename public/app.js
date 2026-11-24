@@ -8,6 +8,7 @@ const weapons = [...new Set(catalog.jokers.flatMap(joker => joker.weapons))].sor
 const tiers = ['normal', 'fine', 'prime', 'mythic', 'legendary', 'unique'];
 const MAX_SLOTS = 16;
 const MAX_UPGRADE_SLOTS = 26;
+const MAX_WEAPON_RAILS = 2;
 const $ = id => document.getElementById(id);
 
 const labels = {
@@ -88,13 +89,48 @@ const base64ToBytes = value => {
   return Uint8Array.from(binary, character => character.charCodeAt(0));
 };
 
-const restorePlan = state => ({
-  ...freshPlan(),
-  name: typeof state.name === 'string' ? state.name.slice(0, 12) : '',
-  upgrades: normalizeUpgrades(state.upgrades),
-  rails: state.rails,
-  active: 0
-});
+const normalizeRail = rail => {
+  if (!rail || typeof rail !== 'object' || !['hero', 'weapon'].includes(rail.type)) return null;
+  const slotsMax = Number.isInteger(rail.slotsMax)
+    ? Math.max(1, Math.min(rail.slotsMax, MAX_SLOTS + 1))
+    : DEFAULT_SLOTS;
+  const counts = new Map();
+
+  for (const entry of Array.isArray(rail.jokers) ? rail.jokers : []) {
+    if (!entry || typeof entry.id !== 'string') continue;
+    const joker = jokerById.get(entry.id);
+    const count = entry.count ?? 1;
+    if (!joker || !Number.isSafeInteger(count) || count < 1) continue;
+    counts.set(entry.id, Math.min(joker.maxStack, (counts.get(entry.id) ?? 0) + count));
+  }
+
+  return {
+    type: rail.type,
+    ...(rail.type === 'weapon' ? { weapon: weapons.includes(rail.weapon) ? rail.weapon : weapons[0] } : {}),
+    slotsMax,
+    jokers: [...counts].map(([id, count]) => ({ id, count }))
+  };
+};
+
+const restorePlan = state => {
+  const rails = [];
+  let weaponRailCount = 0;
+  for (const rail of Array.isArray(state?.rails) ? state.rails : []) {
+    const normalized = normalizeRail(rail);
+    if (!normalized) continue;
+    if (normalized.type === 'weapon' && weaponRailCount >= MAX_WEAPON_RAILS) continue;
+    if (normalized.type === 'weapon') weaponRailCount++;
+    rails.push(normalized);
+  }
+  if (!rails.some(rail => rail.type === 'hero')) rails.unshift(freshPlan().rails[0]);
+  return {
+    ...freshPlan(),
+    name: typeof state?.name === 'string' ? state.name.slice(0, 12) : '',
+    upgrades: normalizeUpgrades(state?.upgrades),
+    rails,
+    active: 0
+  };
+};
 
 async function loadPlan() {
   try {
@@ -211,12 +247,13 @@ function renderCatalog() {
 function renderTabs() {
   $('tabs').innerHTML = plan.rails.map((rail, index) =>
     `<button class="tab ${index === plan.active ? 'on' : ''}" data-i="${index}">${rail.type === 'hero' ? 'Hero' : (rail.weapon || 'Weapon')}</button>`).join('') +
-    `<button class="tab" id="addRail">+ Weapon</button>`;
+    `<button class="tab" id="addRail" ${plan.rails.filter(rail => rail.type === 'weapon').length >= MAX_WEAPON_RAILS ? 'disabled' : ''}>+ Weapon</button>`;
   $('tabs').querySelectorAll('[data-i]').forEach(button => button.onclick = () => {
     plan.active = +button.dataset.i;
     renderAll();
   });
   $('addRail').onclick = () => {
+    if (plan.rails.filter(rail => rail.type === 'weapon').length >= MAX_WEAPON_RAILS) return;
     plan.rails.push({ type: 'weapon', weapon: 'Revolver', slotsMax: DEFAULT_SLOTS, jokers: [] });
     plan.active = plan.rails.length - 1;
     renderAll();

@@ -428,6 +428,11 @@ section {
     border-color: var(--gold2);
 }
 
+.tab:disabled {
+    opacity: .35;
+    cursor : not-allowed;
+}
+
 /* settings-style rows */
 .setrow {
     display      : flex;
