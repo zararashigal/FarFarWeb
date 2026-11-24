@@ -6,6 +6,7 @@ const searchText = new Map(catalog.jokers.map(joker =>
   [joker.id, `${joker.name} ${joker.effect}`.toLowerCase()]));
 const weapons = [...new Set(catalog.jokers.flatMap(joker => joker.weapons))].sort();
 const tiers = ['normal', 'fine', 'prime', 'mythic', 'legendary', 'unique'];
+const MAX_SLOTS = 16;
 const $ = id => document.getElementById(id);
 
 const labels = {
@@ -52,18 +53,58 @@ const tierColors = { normal: '#a7adb3', fine: '#7ccf6b', prime: '#4ea7f0', mythi
 const soulIcon = '<svg class="soul-icon" viewBox="80 85 240 315" role="img" aria-label="Souls"><path d="M 213 92 C 188 112, 174 134, 182 152 C 188 164, 200 168, 198 180 C 194 196, 162 216, 132 232 L 256 290 L 223 356 C 192 344, 152 324, 156 300 C 159 283, 178 282, 186 293 C 191 300, 189 310, 185 316 C 202 315, 212 298, 207 281 C 200 260, 168 248, 134 244 L 88 302 C 128 340, 178 370, 236 392 L 313 271 L 216 226 C 238 214, 248 194, 242 174 C 235 154, 212 142, 207 124 C 204 113, 207 102, 213 92 Z"/></svg>';
 
 const freshPlan = () => ({ rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
-let plan = loadPlan() ?? freshPlan();
+const loadedPlan = await loadPlan();
+const hasOverLimitSharedPlan = Array.isArray(loadedPlan?.rails) &&
+  loadedPlan.rails.some(rail => rail.slotsMax > MAX_SLOTS);
+let plan = hasOverLimitSharedPlan ? freshPlan() : (loadedPlan ?? freshPlan());
 let previousStats = {};
+const hasInvalidSlotLimit = () => plan.rails.some(rail =>
+  !Number.isFinite(rail.slotsMax ?? DEFAULT_SLOTS) ||
+  (rail.slotsMax ?? DEFAULT_SLOTS) < 1 ||
+  (rail.slotsMax ?? DEFAULT_SLOTS) > MAX_SLOTS);
 
-function loadPlan() {
+const bytesToBase64 = bytes => {
+  let binary = '';
+  for (let offset = 0; offset < bytes.length; offset += 0x8000) {
+    binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
+  }
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+
+const base64ToBytes = value => {
+  const base64 = value.replace(/-/g, '+').replace(/_/g, '/');
+  const binary = atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '='));
+  return Uint8Array.from(binary, character => character.charCodeAt(0));
+};
+
+async function loadPlan() {
   try {
     const h = location.hash.slice(1);
+    if (h.startsWith('c=') && 'DecompressionStream' in window) {
+      const stream = new Blob([base64ToBytes(h.slice(2))]).stream().pipeThrough(new DecompressionStream('deflate'));
+      const s = JSON.parse(await new Response(stream).text());
+      return { ...freshPlan(), rails: s.rails, active: 0 };
+    }
     if (!h.startsWith('b=')) return null;
     const s = JSON.parse(decodeURIComponent(escape(atob(h.slice(2)))));
     return { ...freshPlan(), rails: s.rails, active: 0 };
   } catch { return null; }
 }
-const savePlan = () => history.replaceState(null, '', '#b=' + btoa(unescape(encodeURIComponent(JSON.stringify({ rails: plan.rails })))));
+let saveVersion = 0;
+const savePlan = async () => {
+  if (hasInvalidSlotLimit()) return false;
+  const version = ++saveVersion;
+  const state = JSON.stringify({ rails: plan.rails });
+  if ('CompressionStream' in window) {
+    const stream = new Blob([state]).stream().pipeThrough(new CompressionStream('deflate'));
+    const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
+    if (version === saveVersion) history.replaceState(null, '', '#c=' + bytesToBase64(compressed));
+    return true;
+  }
+  const encoded = btoa(unescape(encodeURIComponent(state)));
+  if (version === saveVersion) history.replaceState(null, '', '#b=' + encoded);
+  return true;
+};
 
 const activeRail = () => plan.rails[plan.active];
 const countOf = (rail, id) => rail.jokers.find(joker => joker.id === id)?.count ?? 0;
@@ -195,7 +236,7 @@ function renderRail(build) {
   $('slotStep').onclick = event => {
     const direction = +event.target.dataset.d;
     if (!direction) return;
-    rail.slotsMax = Math.max(1, Math.min(20, (rail.slotsMax ?? DEFAULT_SLOTS) + direction));
+    rail.slotsMax = Math.max(1, Math.min(MAX_SLOTS, (rail.slotsMax ?? DEFAULT_SLOTS) + direction));
     update();
   };
   $('rail').querySelectorAll('[data-rm], [data-m], [data-p]').forEach(button => button.onclick = () => {
@@ -250,6 +291,7 @@ function update() {
   renderStats(build);
   renderCatalog();
   renderSoulTotal();
+  $('share').disabled = hasInvalidSlotLimit();
   savePlan();
 }
 
@@ -276,7 +318,8 @@ $('reset').onclick = () => {
 };
 
 $('share').onclick = async () => {
-  savePlan();
+  if (hasInvalidSlotLimit()) return;
+  await savePlan();
   try {
     await navigator.clipboard.writeText(location.href);
     $('share').textContent = 'Copied!';
@@ -286,4 +329,10 @@ $('share').onclick = async () => {
   }
 };
 
-renderAll();
+if (hasOverLimitSharedPlan) {
+  document.body.style.background = '#000';
+  $('app').innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:14px; max-width:90vw"><div class="err" role="alert" style="margin:0; padding:12px 18px; font-size:24px; text-align:center">Error 67: Build exceeds maximum build slots</div><button class="btn" id="errorReturn" type="button">Return</button></div>';
+  $('errorReturn').onclick = () => location.replace(location.pathname + location.search);
+} else {
+  renderAll();
+}
