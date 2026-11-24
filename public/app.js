@@ -240,8 +240,7 @@ function renderStats(build) {
   $('stats').innerHTML = `
     <div class="hint">${rail.type === 'weapon' ? `${rail.weapon || 'Weapon'} rail combined with Hero rail.` : 'Hero rail.'} Bonuses are added together.</div>
     <h3>Always active</h3>${rows || '<div class="empty">No flat stat bonuses.</div>'}
-    <h3>Conditional / scaling</h3>${conditional || '<div class="empty">None.</div>'}
-    <div class="note">Only what jokers add - base stats and hero upgrades are not included.</div>`;
+    <h3>Conditional / scaling</h3>${conditional || '<div class="empty">None.</div>'}`;
   previousStats[plan.active] = currentStats;
 }
 
