@@ -10,6 +10,7 @@ const spells = JSON.parse(readFileSync(path.join(__dirname, 'spells.json'), 'utf
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/_vercel/insights', express.static(path.join(__dirname, 'node_modules/@vercel/analytics/dist')));
 app.get('/api/spells', (_req, res) => res.json(spells));
 app.get('/api/qr', async (req, res, next) => {
   const value = req.query.url;
