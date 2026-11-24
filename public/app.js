@@ -108,14 +108,23 @@ const savePlan = async () => {
 
 const activeRail = () => plan.rails[plan.active];
 const countOf = (rail, id) => rail.jokers.find(joker => joker.id === id)?.count ?? 0;
+const slotsUsedOnRail = rail => rail.jokers.reduce((total, entry) =>
+  total + (jokerById.get(entry.id)?.slotCost ?? 0) * (entry.count ?? 1), 0);
+const canSetCount = (rail, joker, count) => {
+  const currentCount = countOf(rail, joker.id);
+  const nextSlotsUsed = slotsUsedOnRail(rail) - joker.slotCost * currentCount + joker.slotCost * count;
+  return count <= currentCount || nextSlotsUsed <= MAX_SLOTS;
+};
 
 function setCount(rail, id, count) {
   const joker = jokerById.get(id);
   count = Math.max(0, Math.min(count, joker.maxStack));
+  if (!canSetCount(rail, joker, count)) return false;
   const entry = rail.jokers.find(joker => joker.id === id);
   if (entry) entry.count = count;
   else if (count) rail.jokers.push({ id, count });
   rail.jokers = rail.jokers.filter(joker => joker.count > 0);
+  return true;
 }
 
 const compatible = (joker, rail) => rail.type === 'hero'
@@ -148,15 +157,14 @@ function renderCatalog() {
     const count = countOf(rail, joker.id), canEquip = compatible(joker, rail);
     return `<div class="card" style="--c:${tierColors[joker.tier]}">
       <span class="n">${joker.name}</span>
-      <button class="plus" data-add="${joker.id}" ${!canEquip || count >= joker.maxStack ? 'disabled' : ''}>+</button>
+      <button class="plus" data-add="${joker.id}" ${!canEquip || count >= joker.maxStack || !canSetCount(rail, joker, count + 1) ? 'disabled' : ''}>+</button>
       <span class="e">${joker.effect}</span>
       <span class="meta">${joker.tier} · ${joker.slotCost} slot${joker.slotCost > 1 ? 's' : ''} · max ${joker.maxStack}${joker.soulCost ? ` · ${joker.soulCost.toLocaleString()} ${soulIcon}` : ''}${count ? ` · equipped ×${count}` : ''}${joker.scope === 'weapon' && joker.weapons.length < 14 ? ` · ${joker.weapons.join(', ')}` : ''}</span>
     </div>`;
   }).join('') || '<div class="empty">No jokers match.</div>';
   $('catalog').querySelectorAll('[data-add]').forEach(button => button.onclick = () => {
     const id = button.dataset.add;
-    setCount(rail, id, countOf(rail, id) + 1);
-    update();
+    if (setCount(rail, id, countOf(rail, id) + 1)) update();
   });
 }
 
@@ -215,7 +223,7 @@ function renderRail(build) {
       const joker = jokerById.get(id);
       return `<div class="row" style="--c:${tierColors[joker.tier]}">
         <div class="t"><b>${joker.name}</b><small>${joker.effect}</small></div>
-        <div class="qty"><button class="mini" data-m="${id}">-</button><b>${count}</b><button class="mini" data-p="${id}" ${count >= joker.maxStack ? 'disabled' : ''}>+</button></div>
+        <div class="qty"><button class="mini" data-m="${id}">-</button><b>${count}</b><button class="mini" data-p="${id}" ${count >= joker.maxStack || !canSetCount(rail, joker, count + 1) ? 'disabled' : ''}>+</button></div>
       </div>`;
     }).join('') || '<div class="empty">No jokers yet - press + on a joker in the list.</div>'}`;
   if (rail.type === 'weapon') {
@@ -242,8 +250,7 @@ function renderRail(build) {
   $('rail').querySelectorAll('[data-rm], [data-m], [data-p]').forEach(button => button.onclick = () => {
     const id = button.dataset.rm || button.dataset.m || button.dataset.p;
     const amount = button.dataset.p ? 1 : -1;
-    setCount(rail, id, countOf(rail, id) + amount);
-    update();
+    if (setCount(rail, id, countOf(rail, id) + amount)) update();
   });
   $('rail').querySelectorAll('[data-focus]').forEach(button => button.onclick = () => $('q')?.focus());
 }
