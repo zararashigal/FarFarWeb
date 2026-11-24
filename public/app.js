@@ -1,4 +1,7 @@
 import { calcBuild, indexJokers, DEFAULT_SLOTS } from './calc.js';
+import { inject } from '@vercel/analytics';
+
+inject();
 
 const catalog = await (await fetch('jokers.json')).json();
 const spellData = await (await fetch('/api/spells')).json();
