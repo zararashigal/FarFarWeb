@@ -149,6 +149,7 @@ function renderFilters() {
 function renderCatalog() {
   const rail = activeRail(), query = plan.q.toLowerCase();
   const matches = catalog.jokers.filter(joker =>
+    !(joker.obtain?.length === 1 && joker.obtain[0] === 'mission_loot') &&
     (plan.tier === 'all' || joker.tier === plan.tier) &&
     (plan.showAll || compatible(joker, rail)) &&
     (!query || searchText.get(joker.id).includes(query)));
