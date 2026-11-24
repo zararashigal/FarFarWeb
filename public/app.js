@@ -52,7 +52,7 @@ const statClass = (stat, value) => ((value > 0) !== invertedStats.has(stat) ? 'p
 const tierColors = { normal: '#a7adb3', fine: '#7ccf6b', prime: '#4ea7f0', mythic: '#c070f0', legendary: '#f2a516', unique: '#ff5b4f' };
 const soulIcon = '<svg class="soul-icon" viewBox="80 85 240 315" role="img" aria-label="Souls"><path d="M 213 92 C 188 112, 174 134, 182 152 C 188 164, 200 168, 198 180 C 194 196, 162 216, 132 232 L 256 290 L 223 356 C 192 344, 152 324, 156 300 C 159 283, 178 282, 186 293 C 191 300, 189 310, 185 316 C 202 315, 212 298, 207 281 C 200 260, 168 248, 134 244 L 88 302 C 128 340, 178 370, 236 392 L 313 271 L 216 226 C 238 214, 248 194, 242 174 C 235 154, 212 142, 207 124 C 204 113, 207 102, 213 92 Z"/></svg>';
 
-const freshPlan = () => ({ rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
+const freshPlan = () => ({ name: '', rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
 
 const bytesToBase64 = bytes => {
   let binary = '';
@@ -68,17 +68,24 @@ const base64ToBytes = value => {
   return Uint8Array.from(binary, character => character.charCodeAt(0));
 };
 
+const restorePlan = state => ({
+  ...freshPlan(),
+  name: typeof state.name === 'string' ? state.name.slice(0, 12) : '',
+  rails: state.rails,
+  active: 0
+});
+
 async function loadPlan() {
   try {
     const h = location.hash.slice(1);
     if (h.startsWith('c=') && 'DecompressionStream' in window) {
       const stream = new Blob([base64ToBytes(h.slice(2))]).stream().pipeThrough(new DecompressionStream('deflate'));
       const s = JSON.parse(await new Response(stream).text());
-      return { ...freshPlan(), rails: s.rails, active: 0 };
+      return restorePlan(s);
     }
     if (!h.startsWith('b=')) return null;
     const s = JSON.parse(decodeURIComponent(escape(atob(h.slice(2)))));
-    return { ...freshPlan(), rails: s.rails, active: 0 };
+    return restorePlan(s);
   } catch { return null; }
 }
 const loadedPlan = await loadPlan();
@@ -94,7 +101,7 @@ let saveVersion = 0;
 const savePlan = async () => {
   if (hasInvalidSlotLimit()) return false;
   const version = ++saveVersion;
-  const state = JSON.stringify({ rails: plan.rails });
+  const state = JSON.stringify({ name: plan.name, rails: plan.rails });
   if ('CompressionStream' in window) {
     const stream = new Blob([state]).stream().pipeThrough(new CompressionStream('deflate'));
     const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
@@ -314,10 +321,17 @@ function renderSoulTotal() {
 }
 
 function renderAll() {
+  $('buildName').value = plan.name;
   renderTabs();
   renderFilters();
   update();
 }
+
+$('buildName').oninput = event => {
+  plan.name = event.target.value.slice(0, 12);
+  event.target.value = plan.name;
+  savePlan();
+};
 
 $('reset').onclick = () => {
   plan = freshPlan();

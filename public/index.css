@@ -77,6 +77,23 @@ header .sp {
     white-space   : nowrap;
 }
 
+.build-name {
+    display    : flex;
+    align-items: center;
+    gap        : 7px;
+}
+
+.build-name input {
+    width        : 130px;
+    min-width    : 0;
+    background   : rgba(0, 0, 0, .5);
+    border       : 1px solid rgba(255, 255, 255, .2);
+    border-radius: 4px;
+    padding      : 5px 8px;
+    font-size    : 13px;
+    text-transform : none;
+}
+
 .soul-icon {
     width         : 13px;
     height        : 17px;
