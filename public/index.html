@@ -22,11 +22,33 @@
     <header>
       <h1>Far Far Web - A WebUI for Far Far West Builds</h1>
       <span class="sp"></span>
-      <label class="top-stat build-name">Build name: <input id="buildName" type="text" maxlength="12" autocomplete="off"></label>
-      <span class="top-stat" id="soulTotal">Total: 0</span>
-      <button class="btn" id="share">Copy share link</button>
-      <button class="btn" id="reset">Reset</button>
+      <div class="header-build">
+        <label class="top-stat build-name">Build name: <input id="buildName" type="text" maxlength="12" autocomplete="off"></label>
+        <span class="top-stat" id="soulTotal">Total: 0</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="share">Copy share link</button>
+        <button class="btn qr-share" id="qrShare" type="button" aria-haspopup="dialog">
+          <svg class="qr-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill-rule="evenodd" d="M2 2h8v8H2zM4 4v4h4V4zM14 2h8v8h-8zM16 4v4h4V4zM2 14h8v8H2zM4 16v4h4v-4z"/>
+            <path d="M14 14h3v3h-3zM18 14h4v3h-4zM14 19h3v3h-3zM19 19h3v3h-3z"/>
+          </svg>
+          QR Code
+        </button>
+        <button class="btn" id="reset">Reset</button>
+      </div>
     </header>
+    <dialog class="qr-dialog" id="qrDialog" aria-labelledby="qrTitle">
+      <div class="qr-dialog-header">
+        <h2 id="qrTitle">QR Code</h2>
+        <button class="btn" id="closeQr" type="button">Close</button>
+      </div>
+      <div class="qr-code" id="qrCode" hidden>
+        <img id="qrImage" alt="QR code for this build">
+        <img class="qr-logo" src="favicon.svg" alt="" aria-hidden="true">
+      </div>
+      <div class="err" id="qrError" role="alert" hidden></div>
+    </dialog>
     <main>
       <nav class="spell-bar" id="spellSlots" aria-label="Spell slots"></nav>
       <section>

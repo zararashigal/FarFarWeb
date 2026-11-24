@@ -642,6 +642,7 @@ function update() {
   renderCatalog();
   renderSoulTotal();
   $('share').disabled = hasInvalidSlotLimit();
+  $('qrShare').disabled = hasInvalidSlotLimit();
   savePlan();
 }
 
@@ -687,6 +688,35 @@ $('share').onclick = async () => {
     prompt('Copy this link:', location.href);
   }
 };
+
+$('qrShare').onclick = async () => {
+  if (hasInvalidSlotLimit()) return;
+  await savePlan();
+
+  const image = $('qrImage');
+  const qrCode = $('qrCode');
+  const error = $('qrError');
+  const dialog = $('qrDialog');
+  qrCode.hidden = true;
+  error.hidden = true;
+  error.textContent = '';
+  image.onload = () => { qrCode.hidden = false; };
+  image.onerror = () => {
+    qrCode.hidden = true;
+    error.textContent = 'Could not generate QR code.';
+    error.hidden = false;
+  };
+
+  const qrUrl = new URL('/api/qr', location.href);
+  qrUrl.searchParams.set('url', location.href);
+  image.src = qrUrl.href;
+  dialog.showModal();
+};
+
+$('closeQr').onclick = () => $('qrDialog').close();
+$('qrDialog').addEventListener('click', event => {
+  if (event.target === $('qrDialog')) $('qrDialog').close();
+});
 
 if (hasOverLimitSharedPlan) {
   document.body.style.background = '#000';

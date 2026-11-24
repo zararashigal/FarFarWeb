@@ -70,6 +70,11 @@ header .sp {
     flex: 1;
 }
 
+.header-build,
+.header-actions {
+    display: contents;
+}
+
 .top-stat {
     color         : var(--gold2);
     text-transform: uppercase;
@@ -126,6 +131,89 @@ button, select, input {
 .btn:disabled {
     opacity: .35;
     cursor : not-allowed;
+}
+
+.qr-share {
+    display    : inline-flex;
+    align-items: center;
+    gap        : 6px;
+}
+
+.qr-icon {
+    width : 16px;
+    height: 16px;
+    fill  : currentColor;
+}
+
+.qr-dialog {
+    width        : min(340px, calc(100vw - 24px));
+    max-width    : calc(100vw - 24px);
+    padding      : 14px;
+    color        : var(--text);
+    background   : #21170d;
+    border       : 1px solid rgba(255, 255, 255, .25);
+    border-top   : 2px solid var(--gold);
+    border-radius: 4px;
+    box-shadow   : 0 8px 24px rgba(0, 0, 0, .6);
+}
+
+.qr-dialog[open] {
+    display       : flex;
+    flex-direction: column;
+    gap           : 12px;
+}
+
+.qr-dialog::backdrop {
+    background: rgba(0, 0, 0, .72);
+}
+
+.qr-dialog-header {
+    display        : flex;
+    align-items    : center;
+    justify-content: space-between;
+    gap            : 12px;
+}
+
+.qr-dialog-header h2 {
+    margin        : 0;
+    color         : var(--gold);
+    font-size     : 16px;
+    text-transform: uppercase;
+}
+
+.qr-code {
+    position     : relative;
+    width        : 100%;
+    max-width    : 280px;
+    aspect-ratio : 1;
+    margin       : 0 auto;
+    background   : var(--gold);
+    border-radius: 3px;
+}
+
+.qr-code[hidden] {
+    display: none;
+}
+
+.qr-code #qrImage {
+    display      : block;
+    width        : 100%;
+    height       : 100%;
+    border-radius: 3px;
+}
+
+.qr-code .qr-logo {
+    position     : absolute;
+    top          : 50%;
+    left         : 50%;
+    width        : 48px;
+    height       : 48px;
+    padding      : 6px;
+    background   : #21170d;
+    border       : 3px solid var(--gold);
+    border-radius: 4px;
+    object-fit   : contain;
+    transform    : translate(-50%, -50%);
 }
 
 main {
@@ -194,6 +282,26 @@ main {
         display: none;
     }
 
+    .header-build {
+        display    : flex;
+        align-items: center;
+        flex       : 1 0 100%;
+        gap        : 14px;
+    }
+
+    .header-actions {
+        display        : flex;
+        align-items    : center;
+        justify-content: flex-start;
+        flex           : 1 0 100%;
+        gap            : 8px;
+    }
+
+    .header-actions .btn {
+        flex      : 0 0 auto;
+        white-space: nowrap;
+    }
+
     section {
         min-width : 0;
         min-height: auto;
@@ -227,6 +335,18 @@ main {
 
     .top-stat {
         font-size: 11px;
+    }
+
+    .header-build {
+        gap: 8px;
+    }
+
+    .build-name input {
+        width: 100px;
+    }
+
+    .header-actions {
+        gap: 6px;
     }
 
     .btn {
@@ -487,11 +607,11 @@ section {
     .spell-bar {
         align-items   : center;
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-start;
         min-height    : 72px;
         width         : calc(100% + 28px);
         margin        : -14px -14px 0;
-        padding       : 8px 0;
+        padding       : 8px 0 8px 18px;
         gap           : 8px;
         border-right  : 0;
     }
