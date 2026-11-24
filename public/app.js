@@ -246,7 +246,7 @@ const stepper = (id, value) => `<div class="stepper" id="${id}"><button data-d="
 function renderFilters() {
   $('filters').innerHTML = `<input type="text" id="q" placeholder="Search name or effect...">` +
     ['all', ...tiers].map(tier => `<button class="chip ${plan.tier === tier ? 'on' : ''}" data-tier="${tier}">${tier}</button>`).join('') +
-    `<label class="chip"><input type="checkbox" id="showAll" ${plan.showAll ? 'checked' : ''}> incompatible</label>`;
+    `<label class="chip debug-only"><input type="checkbox" id="showAll" ${plan.showAll ? 'checked' : ''}> incompatible</label>`;
   $('q').value = plan.q;
   $('q').oninput = event => { plan.q = event.target.value; renderCatalog(); };
   $('showAll').onchange = event => { plan.showAll = event.target.checked; renderCatalog(); };
@@ -485,7 +485,7 @@ function slotCircles(rail, stats) {
   let html = '';
   for (let index = 0; index < rows; index++) {
     const cell = cells[index];
-    if (cell) html += `<button class="slot filled ${index >= stats.slotsMax ? 'over' : ''} ${cell.first ? '' : 'cont'}" style="--tc:${tierColors[cell.joker.tier]}" data-rm="${cell.id}" title="${cell.joker.name} - click to remove one">${cell.first ? cell.number : ''}</button>`;
+    if (cell) html += `<button class="slot filled ${index >= stats.slotsMax ? 'over' : ''} ${cell.first ? '' : 'cont'}" style="--tc:${tierColors[cell.joker.tier]}" data-rm="${cell.id}" title="${cell.joker.name}">${cell.first ? cell.number : ''}</button>`;
     else if (index < stats.slotsMax) html += '<button class="slot" data-focus title="Empty slot">+</button>';
     else html += `<button class="slot locked" tabindex="-1"></button>`;
   }
@@ -535,7 +535,7 @@ function renderRail(build) {
         <div class="t"><b>${joker.name}</b><small>${joker.effect}</small></div>
         <div class="qty"><button class="mini" data-m="${id}">-</button><b>${count}</b><button class="mini" data-p="${id}" ${count >= joker.maxStack || !canSetCount(rail, joker, count + 1) ? 'disabled' : ''}>+</button></div>
       </div>`;
-    }).join('') || '<div class="empty">No jokers yet - press + on a joker in the list.</div>'}`;
+    }).join('') || '<div class="empty">No jokers equipped.</div>'}`;
   if (rail.type === 'weapon') {
     $('weaponStep').onclick = event => {
       const direction = +event.target.dataset.d;
@@ -624,11 +624,9 @@ function renderStats(build) {
   const conditional = bonuses.conditional
     .map(bonus => statRow(bonus.stat, bonus.unit, bonus.value, { note: bonus.note }))
     .join('');
-  const rail = activeRail();
   $('stats').innerHTML = `
-    <div class="hint">${rail.type === 'weapon' ? `${rail.weapon || 'Weapon'} rail combined with Hero rail.` : 'Hero rail.'} Bonuses are added together.</div>
-    <h3>Total</h3>${totalRows || '<div class="empty">No stat bonuses or base upgrades.</div>'}
-    <h3>Always active</h3>${rows || '<div class="empty">No flat stat bonuses.</div>'}
+    <h3>Total</h3>${totalRows || '<div class="empty">None.</div>'}
+    <h3>Always active</h3>${rows || '<div class="empty">None.</div>'}
     <h3>Conditional / scaling</h3>${conditional || '<div class="empty">None.</div>'}`;
   previousStats[plan.active] = currentStats;
   previousTotals[plan.active] = totalStats;
