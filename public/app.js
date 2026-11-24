@@ -53,15 +53,6 @@ const tierColors = { normal: '#a7adb3', fine: '#7ccf6b', prime: '#4ea7f0', mythi
 const soulIcon = '<svg class="soul-icon" viewBox="80 85 240 315" role="img" aria-label="Souls"><path d="M 213 92 C 188 112, 174 134, 182 152 C 188 164, 200 168, 198 180 C 194 196, 162 216, 132 232 L 256 290 L 223 356 C 192 344, 152 324, 156 300 C 159 283, 178 282, 186 293 C 191 300, 189 310, 185 316 C 202 315, 212 298, 207 281 C 200 260, 168 248, 134 244 L 88 302 C 128 340, 178 370, 236 392 L 313 271 L 216 226 C 238 214, 248 194, 242 174 C 235 154, 212 142, 207 124 C 204 113, 207 102, 213 92 Z"/></svg>';
 
 const freshPlan = () => ({ rails: [{ type: 'hero', slotsMax: DEFAULT_SLOTS, jokers: [] }], active: 0, tier: 'all', q: '', showAll: false });
-const loadedPlan = await loadPlan();
-const hasOverLimitSharedPlan = Array.isArray(loadedPlan?.rails) &&
-  loadedPlan.rails.some(rail => rail.slotsMax > MAX_SLOTS);
-let plan = hasOverLimitSharedPlan ? freshPlan() : (loadedPlan ?? freshPlan());
-let previousStats = {};
-const hasInvalidSlotLimit = () => plan.rails.some(rail =>
-  !Number.isFinite(rail.slotsMax ?? DEFAULT_SLOTS) ||
-  (rail.slotsMax ?? DEFAULT_SLOTS) < 1 ||
-  (rail.slotsMax ?? DEFAULT_SLOTS) > MAX_SLOTS);
 
 const bytesToBase64 = bytes => {
   let binary = '';
@@ -90,6 +81,15 @@ async function loadPlan() {
     return { ...freshPlan(), rails: s.rails, active: 0 };
   } catch { return null; }
 }
+const loadedPlan = await loadPlan();
+const hasOverLimitSharedPlan = Array.isArray(loadedPlan?.rails) &&
+  loadedPlan.rails.some(rail => rail.slotsMax > MAX_SLOTS);
+let plan = hasOverLimitSharedPlan ? freshPlan() : (loadedPlan ?? freshPlan());
+let previousStats = {};
+const hasInvalidSlotLimit = () => plan.rails.some(rail =>
+  !Number.isFinite(rail.slotsMax ?? DEFAULT_SLOTS) ||
+  (rail.slotsMax ?? DEFAULT_SLOTS) < 1 ||
+  (rail.slotsMax ?? DEFAULT_SLOTS) > MAX_SLOTS);
 let saveVersion = 0;
 const savePlan = async () => {
   if (hasInvalidSlotLimit()) return false;
