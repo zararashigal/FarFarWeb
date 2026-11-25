@@ -86,21 +86,19 @@ header .brand-logo {
 header .byline {
     align-self           : flex-start;
     color               : var(--gold);
-    font-size           : 13px;
-    letter-spacing      : .6px;
+    font-size           : 11px;
+    letter-spacing      : .4px;
     line-height         : 1;
     text-transform      : uppercase;
-}
-
-header .byline-heart {
-    width         : 15px;
-    height        : 15px;
-    vertical-align: -4px;
 }
 
 header .byline-name {
     display             : inline-block;
     color               : transparent;
+    font-size           : 15px;
+    font-family         : "Lacquer", cursive;
+    font-weight         : 400;
+    line-height         : 1;
     background          : linear-gradient(90deg, #5bcefa 0 20%, #f5a9b8 20% 40%, #fff 40% 60%, #f5a9b8 60% 80%, #5bcefa 80%);
     background-clip     : text;
     -webkit-background-clip: text;
