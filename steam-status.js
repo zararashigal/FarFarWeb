@@ -30,7 +30,7 @@ export function createSteamStatusMonitor(fetchStatus = fetchSteamStatus, now = D
     checking = true;
     const started = performance.now();
     try {
-      const response = await fetchStatus(STEAM_PLAYERS_URL, { signal: AbortSignal.timeout(10_000) });
+      const response = await fetchStatus(`${STEAM_PLAYERS_URL}&_=${now()}`, { signal: AbortSignal.timeout(10_000) });
       if (!response.ok) throw new Error(`Steam API returned HTTP ${response.status}`);
       const data = await response.json();
       const count = data?.response?.player_count;
