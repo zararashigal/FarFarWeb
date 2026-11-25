@@ -733,7 +733,8 @@ function renderRail(build) {
 }
 
 function statRow(stat, unit, value, options = {}) {
-  const [, color, glyph] = family(stat);
+  const [, defaultColor, glyph] = family(stat);
+  const color = activeRail().type === 'weapon' ? weaponStatColors[stat] ?? defaultColor : defaultColor;
   const displayValue = stat === 'spellCooldown' ? Math.abs(value) : value;
   const previousValue = options.was === undefined
     ? undefined
