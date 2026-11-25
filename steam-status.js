@@ -1,10 +1,25 @@
+import https from 'node:https';
+
 const STEAM_PLAYERS_URL = 'https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=3124540';
 const CHECK_INTERVAL = 90_000;
 const STALE_AFTER = CHECK_INTERVAL * 2;
 const HISTORY_WINDOW = 24 * 60 * 60 * 1000;
 const MAX_SAMPLES = HISTORY_WINDOW / CHECK_INTERVAL + 1;
 
-export function createSteamStatusMonitor(fetchStatus = fetch, now = Date.now) {
+async function fetchSteamStatus(url, options) {
+  const response = await new Promise((resolve, reject) => {
+    https.get(url, options, resolve).on('error', reject);
+  });
+  const chunks = [];
+  for await (const chunk of response) chunks.push(chunk);
+  return {
+    ok: response.statusCode >= 200 && response.statusCode < 300,
+    status: response.statusCode,
+    json: async () => JSON.parse(Buffer.concat(chunks).toString('utf8'))
+  };
+}
+
+export function createSteamStatusMonitor(fetchStatus = fetchSteamStatus, now = Date.now) {
   let latest = { state: 'pending', playerCount: null, checkedAt: null, responseTimeMs: null, playerChange: null };
   let history = [];
   let checking = false;
