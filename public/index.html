@@ -47,14 +47,9 @@
         <button class="btn" id="reset">Reset</button>
       </div>
     </header>
-    <dialog class="qr-dialog" id="qrDialog" aria-labelledby="qrTitle">
-      <div class="qr-dialog-header">
-        <h2 id="qrTitle">QR Code</h2>
-        <button class="btn" id="closeQr" type="button">Close</button>
-      </div>
+    <dialog class="qr-dialog" id="qrDialog" aria-label="Far Far Web QR code">
       <div class="qr-code" id="qrCode" hidden>
-        <img id="qrImage" alt="QR code for this build">
-        <img class="qr-logo" src="favicon.svg" alt="" aria-hidden="true">
+        <img id="qrImage" alt="Far Far Web build QR code">
       </div>
       <div class="err" id="qrError" role="alert" hidden></div>
     </dialog>

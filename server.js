@@ -25,8 +25,8 @@ app.get('/api/qr', async (req, res, next) => {
     const svg = await QRCode.toString(value, {
       type: 'svg',
       errorCorrectionLevel: 'H',
-      margin: 2,
-      color: { dark: '#21170d', light: '#f2a516' }
+      margin: 4,
+      color: { dark: '#000000', light: '#ffffff' }
     });
     res.type('image/svg+xml').send(svg);
   } catch (error) {

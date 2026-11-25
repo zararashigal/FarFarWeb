@@ -879,6 +879,99 @@ $('share').onclick = async () => {
   }
 };
 
+async function createQrPng(svgText, name) {
+  const viewBox = svgText.match(/viewBox="0 0 (\d+) \d+"/);
+  if (!viewBox) throw new Error('Invalid QR image data');
+  const scale = 8, qrSize = +viewBox[1] * scale, layoutScale = qrSize / 380;
+  const headerHeight = Math.round(59 * layoutScale), headerPadding = 18 * layoutScale;
+  const svgImage = new Image();
+  const svgUrl = URL.createObjectURL(new Blob([
+    svgText.replace('<svg ', `<svg width="${qrSize}" height="${qrSize}" `)
+  ], { type: 'image/svg+xml' }));
+  try {
+    await new Promise((resolve, reject) => {
+      svgImage.onload = resolve;
+      svgImage.onerror = () => reject(new Error('Could not render QR code.'));
+      svgImage.src = svgUrl;
+    });
+  } finally {
+    URL.revokeObjectURL(svgUrl);
+  }
+
+  const canvas = document.createElement('canvas');
+  canvas.width = qrSize;
+  canvas.height = headerHeight + qrSize;
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('Could not render QR code.');
+  context.fillStyle = '#fff';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = '#080604';
+  context.fillRect(0, 0, canvas.width, headerHeight);
+
+  const logo = new Image();
+  logo.src = new URL('favicon.svg', location.href).href;
+  await logo.decode();
+  const logoWidth = 32 * layoutScale, logoHeight = 42 * layoutScale;
+  const logoX = headerPadding, logoY = (headerHeight - logoHeight) / 2;
+  context.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+  const brandX = logoX + logoWidth + 10 * layoutScale;
+  context.fillStyle = '#f2a516';
+  context.font = `600 ${18 * layoutScale}px "Bahnschrift", "Oswald", "Roboto Condensed", "Arial Narrow", Impact, sans-serif`;
+  context.textAlign = 'left';
+  context.textBaseline = 'middle';
+  if ('letterSpacing' in context) context.letterSpacing = `${layoutScale}px`;
+  context.fillText('FAR FAR WEB', brandX, 21 * layoutScale, canvas.width - brandX - headerPadding);
+  const brandWidth = context.measureText('FAR FAR WEB').width;
+  context.fillStyle = '#f2a516';
+  context.font = `600 ${11 * layoutScale}px "Bahnschrift", "Oswald", "Roboto Condensed", "Arial Narrow", Impact, system-ui, sans-serif`;
+  if ('letterSpacing' in context) context.letterSpacing = `${.4 * layoutScale}px`;
+  const bylineY = 41 * layoutScale;
+  context.fillText('BY ', brandX, bylineY);
+  const byWidth = context.measureText('BY ').width;
+  const author = 'ASHLEY ORION';
+  const authorX = brandX + byWidth;
+  context.font = `400 ${15 * layoutScale}px "Lacquer", cursive`;
+  await document.fonts.load(context.font);
+  if ('letterSpacing' in context) context.letterSpacing = `${.4 * layoutScale}px`;
+  const authorWidth = context.measureText(author).width;
+  const gradient = context.createLinearGradient(authorX, 0, authorX + authorWidth, 0);
+  gradient.addColorStop(0, '#5bcefa');
+  gradient.addColorStop(.2, '#f5a9b8');
+  gradient.addColorStop(.4, '#fff');
+  gradient.addColorStop(.6, '#f5a9b8');
+  gradient.addColorStop(.8, '#5bcefa');
+  context.fillStyle = gradient;
+  context.fillText(author, authorX, bylineY);
+  const bylineWidth = byWidth + authorWidth;
+  const brandEnd = brandX + Math.max(brandWidth, bylineWidth);
+  context.fillStyle = '#f2a516';
+  context.font = `700 ${13 * layoutScale}px "Bahnschrift", "Oswald", "Roboto Condensed", "Arial Narrow", Impact, system-ui, sans-serif`;
+  if ('letterSpacing' in context) context.letterSpacing = `${.8 * layoutScale}px`;
+  context.textAlign = 'right';
+  context.fillText('BUILD', canvas.width - headerPadding, 21 * layoutScale, canvas.width - brandEnd - headerPadding * 2);
+  context.fillStyle = name ? '#ffc93c' : '#f2a516';
+  context.font = `400 ${13 * layoutScale}px "Bahnschrift", "Oswald", "Roboto Condensed", "Arial Narrow", Impact, system-ui, sans-serif`;
+  if ('letterSpacing' in context) context.letterSpacing = `${.2 * layoutScale}px`;
+  context.textAlign = 'right';
+  context.fillText(name ? name.toUpperCase() : 'UNNAMED BUILD', canvas.width - headerPadding, 41 * layoutScale, canvas.width - brandEnd - headerPadding * 2);
+
+  context.imageSmoothingEnabled = false;
+  const qrY = headerHeight;
+  context.drawImage(svgImage, 0, qrY, qrSize, qrSize);
+
+  const logoSize = qrSize * .09, centerX = canvas.width / 2, centerY = qrY + qrSize / 2;
+  context.fillStyle = '#21170d';
+  context.fillRect(centerX - logoSize / 2, centerY - logoSize / 2, logoSize, logoSize);
+  context.strokeStyle = '#fff';
+  context.lineWidth = scale;
+  context.strokeRect(centerX - logoSize / 2, centerY - logoSize / 2, logoSize, logoSize);
+  context.drawImage(logo, centerX - logoSize * .26, centerY - logoSize * .34, logoSize * .52, logoSize * .68);
+
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Could not encode QR code.')), 'image/png');
+  });
+}
+
 $('qrShare').onclick = async () => {
   if (hasInvalidSlotLimit()) return;
   await savePlan();
@@ -890,20 +983,29 @@ $('qrShare').onclick = async () => {
   qrCode.hidden = true;
   error.hidden = true;
   error.textContent = '';
-  image.onload = () => { qrCode.hidden = false; };
-  image.onerror = () => {
+  const qrUrl = new URL('/api/qr', location.href);
+  qrUrl.searchParams.set('url', location.href);
+
+  try {
+    const response = await fetch(qrUrl.href);
+    if (!response.ok) throw new Error('Could not generate QR code.');
+    const png = await createQrPng(await response.text(), plan.name.trim());
+    if (image.src.startsWith('blob:')) URL.revokeObjectURL(image.src);
+    image.onload = () => { qrCode.hidden = false; };
+    image.onerror = () => {
+      qrCode.hidden = true;
+      error.textContent = 'Could not generate QR code.';
+      error.hidden = false;
+    };
+    image.src = URL.createObjectURL(png);
+  } catch {
     qrCode.hidden = true;
     error.textContent = 'Could not generate QR code.';
     error.hidden = false;
-  };
-
-  const qrUrl = new URL('/api/qr', location.href);
-  qrUrl.searchParams.set('url', location.href);
-  image.src = qrUrl.href;
+  }
   dialog.showModal();
 };
 
-$('closeQr').onclick = () => $('qrDialog').close();
 $('qrDialog').addEventListener('click', event => {
   if (event.target === $('qrDialog')) $('qrDialog').close();
 });
