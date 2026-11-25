@@ -139,6 +139,11 @@ header .sp {
     display: contents;
 }
 
+.header-status {
+    color          : var(--text);
+    text-decoration: none;
+}
+
 .top-stat {
     color         : var(--gold2);
     text-transform: uppercase;
@@ -200,7 +205,6 @@ button, select, input {
 .qr-share {
     display    : inline-flex;
     align-items: center;
-    gap        : 6px;
 }
 
 .qr-icon {
@@ -324,6 +328,7 @@ main {
         display        : flex;
         align-items    : center;
         justify-content: flex-start;
+        flex-wrap      : wrap;
         flex           : 1 0 100%;
         gap            : 8px;
     }

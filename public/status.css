@@ -28,12 +28,6 @@
     white-space: nowrap;
 }
 
-.status-panel p {
-    margin     : 0 0 12px;
-    color      : var(--muted);
-    font-weight: 500;
-}
-
 .status-row {
     display        : flex;
     align-items    : center;
@@ -55,15 +49,6 @@
 
 .status-row .status-unreachable {
     color: var(--bad);
-}
-
-.status-panel .status-detail {
-    margin: 0;
-}
-
-.status-panel .status-note {
-    margin-top: 4px;
-    font-size : 13px;
 }
 
 .status-history {
@@ -104,5 +89,13 @@
 }
 
 .status-link {
-    color: var(--gold2);
+    color      : var(--gold2);
+    font-weight: 500;
+    font-size  : 13px;
+}
+
+.status-disclaimer {
+    margin   : 0;
+    color    : var(--gold2);
+    font-size: 12px;
 }

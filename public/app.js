@@ -885,7 +885,7 @@ $('share').onclick = async () => {
   try {
     await navigator.clipboard.writeText(location.href);
     $('share').textContent = 'Copied!';
-    setTimeout(() => $('share').textContent = 'Copy share link', 1500);
+    setTimeout(() => $('share').textContent = 'Copy link', 1500);
   } catch {
     prompt('Copy this link:', location.href);
   }

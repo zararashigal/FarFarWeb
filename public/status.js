@@ -1,13 +1,11 @@
 const playerCount = document.getElementById('playerCount');
 const steamStatus = document.getElementById('steamStatus');
-const statusDetail = document.getElementById('statusDetail');
 const playerChange = document.getElementById('playerChange');
 const recentPeak = document.getElementById('recentPeak');
 const responseTime = document.getElementById('responseTime');
 const playerHistory = document.getElementById('playerHistory');
 const historyStart = document.getElementById('historyStart');
 const historyEnd = document.getElementById('historyEnd');
-const historyDetail = document.getElementById('historyDetail');
 const statusCountdown = document.getElementById('statusCountdown');
 let nextCheckAt = null, checking = false, fetching = false, refreshTimer;
 
@@ -30,7 +28,7 @@ function renderHistory(history) {
   historyEnd.textContent = '';
   const valid = history.filter(sample => Number.isSafeInteger(sample.playerCount) && sample.playerCount >= 0);
   if (!valid.length) {
-    historyDetail.textContent = 'No recent player count data available.';
+    playerHistory.setAttribute('aria-label', 'No recent player count data available');
     return;
   }
   const counts = valid.map(sample => sample.playerCount);
@@ -60,7 +58,7 @@ function renderHistory(history) {
   playerHistory.prepend(line);
   historyStart.textContent = new Date(first).toLocaleString();
   historyEnd.textContent = first === last ? '' : new Date(last).toLocaleString();
-  historyDetail.textContent = `Range: ${min.toLocaleString()} - ${max.toLocaleString()} players.`;
+  playerHistory.setAttribute('aria-label', `Recent Steam player activity, ${min.toLocaleString()} to ${max.toLocaleString()} players`);
 }
 
 async function updateStatus() {
@@ -87,22 +85,22 @@ async function updateStatus() {
       steamStatus.className = 'status-reachable';
       const validCount = Number.isSafeInteger(steam.playerCount) && steam.playerCount >= 0;
       playerCount.textContent = validCount ? steam.playerCount.toLocaleString() : 'Unavailable';
-      statusDetail.textContent = validCount
+      playerCount.title = validCount
         ? `Steam player count checked ${checkedAt}.`
         : `Steam returned an invalid player count. Last checked ${checkedAt}.`;
     } else if (steam.state === 'stale') {
       steamStatus.textContent = 'Out of date';
       playerCount.textContent = 'Unavailable';
-      statusDetail.textContent = `Steam player count is out of date. Last checked ${checkedAt}.`;
+      playerCount.title = `Steam player count is out of date. Last checked ${checkedAt}.`;
     } else if (steam.state === 'pending') {
       steamStatus.textContent = 'Checking...';
       playerCount.textContent = 'Checking...';
-      statusDetail.textContent = 'Waiting for the first Steam player count check.';
+      playerCount.title = 'Waiting for the first Steam player count check.';
     } else {
       steamStatus.textContent = 'Offline';
       steamStatus.className = 'status-unreachable';
       playerCount.textContent = 'Unavailable';
-      statusDetail.textContent = checkedAt
+      playerCount.title = checkedAt
         ? `Steam player count could not be retrieved. Last checked ${checkedAt}.`
         : 'Steam player count could not be retrieved.';
     }
@@ -117,7 +115,7 @@ async function updateStatus() {
     recentPeak.textContent = '-';
     responseTime.textContent = '-';
     renderHistory([]);
-    statusDetail.textContent = 'Could not load status from Far Far Web.';
+    playerCount.title = 'Could not load status from Far Far Web.';
   } finally {
     fetching = false;
     updateCountdown();
