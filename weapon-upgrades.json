@@ -1,0 +1,720 @@
+{
+ "meta": {
+  "game": "Far Far West",
+  "snapshot": "2026-11-25",
+  "weaponCount": 14,
+  "source": "farfarwest.wiki.gg weapon pages (Upgrades tables), pages last edited 2026-09-10 to 2026-10-24; patch 0.3.0.0 (2026-10-22) included. Text is licensed CC BY-SA 4.0.",
+  "pointBudget": {
+   "basePoints": 20,
+   "requiredWeaponLevel": 40,
+   "prestigeBonusMax": 6,
+   "pointsPerPrestige": 2
+  }
+ },
+ "weapons": [
+  {
+   "id": "quad-cylinder",
+   "name": "Quad Cylinder",
+   "category": "primary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "clipSize",
+     "label": "Clip Size",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 160
+    },
+    {
+     "stat": "reloadSpeed",
+     "label": "Reload Speed",
+     "perSlot": 7.5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 120
+    },
+    {
+     "stat": "accuracy",
+     "label": "Accuracy",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 25
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 64
+  },
+  {
+   "id": "long-ranger",
+   "name": "Long Ranger",
+   "category": "primary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "clipSize",
+     "label": "Clip Size",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 160
+    },
+    {
+     "stat": "reloadSpeed",
+     "label": "Reload Speed",
+     "perSlot": 7.5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 120
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 59
+  },
+  {
+   "id": "minigun",
+   "name": "Minigun",
+   "category": "primary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "ammoBag",
+     "label": "Ammo Bag",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "accuracy",
+     "label": "Accuracy",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 25
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 15
+    }
+   ],
+   "totalSlotsAcrossStats": 40
+  },
+  {
+   "id": "shotgun",
+   "name": "Shotgun",
+   "category": "primary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "clipSize",
+     "label": "Clip Size",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 160
+    },
+    {
+     "stat": "reloadSpeed",
+     "label": "Reload Speed",
+     "perSlot": 7.5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 120
+    },
+    {
+     "stat": "accuracy",
+     "label": "Accuracy",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 25
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 64
+  },
+  {
+   "id": "leveredge",
+   "name": "Leveredge",
+   "category": "primary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "clipSize",
+     "label": "Clip Size",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 160
+    },
+    {
+     "stat": "reloadSpeed",
+     "label": "Reload Speed",
+     "perSlot": 7.5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 120
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 59
+  },
+  {
+   "id": "knuckles",
+   "name": "Knuckles",
+   "category": "primary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "range",
+     "label": "Range",
+     "perSlot": 4,
+     "unit": "%",
+     "maxSlots": 10,
+     "maxBonus": 40
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    },
+    {
+     "stat": "chargingSpeed",
+     "label": "Charging Speed",
+     "perSlot": 15,
+     "unit": "%",
+     "maxSlots": 4,
+     "maxBonus": 60
+    }
+   ],
+   "totalSlotsAcrossStats": 33
+  },
+  {
+   "id": "lasso",
+   "name": "Lasso",
+   "category": "primary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "range",
+     "label": "Range",
+     "perSlot": 4,
+     "unit": "%",
+     "maxSlots": 10,
+     "maxBonus": 40
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    },
+    {
+     "stat": "chargingSpeed",
+     "label": "Charging Speed",
+     "perSlot": 15,
+     "unit": "%",
+     "maxSlots": 4,
+     "maxBonus": 60
+    }
+   ],
+   "totalSlotsAcrossStats": 33
+  },
+  {
+   "id": "revolver",
+   "name": "Revolver",
+   "category": "secondary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "clipSize",
+     "label": "Clip Size",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 160
+    },
+    {
+     "stat": "reloadSpeed",
+     "label": "Reload Speed",
+     "perSlot": 7.5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 120
+    },
+    {
+     "stat": "lifesteal",
+     "label": "Lifesteal",
+     "perSlot": 1,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 5
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 64
+  },
+  {
+   "id": "bow",
+   "name": "Bow",
+   "category": "secondary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Bend Speed",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 80
+    },
+    {
+     "stat": "ammoBag",
+     "label": "Ammo Bag",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "lifesteal",
+     "label": "Lifesteal",
+     "perSlot": 1,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 5
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 40
+  },
+  {
+   "id": "dual-revolvers",
+   "name": "Dual Revolvers",
+   "category": "secondary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "ammoBag",
+     "label": "Ammo Bag",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "reloadSpeed",
+     "label": "Reload Speed",
+     "perSlot": 7.5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 120
+    },
+    {
+     "stat": "lifesteal",
+     "label": "Lifesteal",
+     "perSlot": 1,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 5
+    },
+    {
+     "stat": "accuracy",
+     "label": "Accuracy",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 25
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 53
+  },
+  {
+   "id": "boomerang",
+   "name": "Boomerang",
+   "category": "secondary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "lifesteal",
+     "label": "Lifesteal",
+     "perSlot": 1,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 5
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    },
+    {
+     "stat": "lingeringTime",
+     "label": "Lingering Time",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 50
+    },
+    {
+     "stat": "range",
+     "label": "Range",
+     "perSlot": 15,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 75
+    }
+   ],
+   "totalSlotsAcrossStats": 26
+  },
+  {
+   "id": "sheriff-star",
+   "name": "Sheriff Star",
+   "category": "secondary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 16,
+     "maxBonus": 80
+    },
+    {
+     "stat": "lifesteal",
+     "label": "Lifesteal",
+     "perSlot": 1,
+     "unit": "%",
+     "maxSlots": 5,
+     "maxBonus": 5
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    },
+    {
+     "stat": "pickupRange",
+     "label": "Pickup Range",
+     "perSlot": 10,
+     "unit": "%",
+     "maxSlots": 10,
+     "maxBonus": 100
+    }
+   ],
+   "totalSlotsAcrossStats": 42
+  },
+  {
+   "id": "banjo",
+   "name": "Banjo",
+   "category": "secondary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "attackSpeed",
+     "label": "Attack Speed",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "range",
+     "label": "Range",
+     "perSlot": 4,
+     "unit": "%",
+     "maxSlots": 10,
+     "maxBonus": 40
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    },
+    {
+     "stat": "chordCapacity",
+     "label": "Chord Capacity",
+     "perSlot": 1,
+     "unit": "flat",
+     "maxSlots": 5,
+     "maxBonus": 5
+    }
+   ],
+   "totalSlotsAcrossStats": 34
+  },
+  {
+   "id": "jetpack",
+   "name": "Jetpack",
+   "category": "secondary",
+   "upgrades": [
+    {
+     "stat": "damage",
+     "label": "Damage",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 8,
+     "maxBonus": 40
+    },
+    {
+     "stat": "fuelAmmo",
+     "label": "Fuel Ammo",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 10,
+     "maxBonus": 50
+    },
+    {
+     "stat": "elevationForce",
+     "label": "Elevation Force",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 10,
+     "maxBonus": 50
+    },
+    {
+     "stat": "flightDuration",
+     "label": "Flight Duration",
+     "perSlot": 5,
+     "unit": "%",
+     "maxSlots": 10,
+     "maxBonus": 50
+    },
+    {
+     "stat": "drawSpeed",
+     "label": "Draw Speed",
+     "perSlot": 30,
+     "unit": "%",
+     "maxSlots": 3,
+     "maxBonus": 90
+    }
+   ],
+   "totalSlotsAcrossStats": 41
+  }
+ ]
+}

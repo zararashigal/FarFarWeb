@@ -2,13 +2,22 @@ import { calcBuild, indexJokers, DEFAULT_SLOTS } from './calc.js';
 
 const catalog = await (await fetch('jokers.json')).json();
 const spellData = await (await fetch('/api/spells')).json();
+const weaponUpgradeData = await (await fetch('/api/weapon-upgrades')).json();
 const jokerById = indexJokers(catalog.jokers);
 const spellById = new Map(spellData.spells.map(spell => [spell.id, spell]));
 const spellSchoolById = new Map(spellData.schools.map(school => [school.id, school]));
+const weaponUpgradeByName = new Map(weaponUpgradeData.weapons.map(weapon => [weapon.name, weapon]));
+const weaponCategories = ['primary', 'secondary'];
+const weaponCategoryLabel = category => category[0].toUpperCase() + category.slice(1);
+const weaponsByCategory = {
+  primary: weaponUpgradeData.weapons.filter(weapon => weapon.category === 'primary'),
+  secondary: weaponUpgradeData.weapons.filter(weapon => weapon.category === 'secondary')
+};
 let totalSpellCooldown = 0;
 const spellCooldownText = spell => {
-  const cooldown = Math.max(0, spell.cooldown * (1 + totalSpellCooldown / 100));
-  return totalSpellCooldown
+  const cooldownReduction = totalSpellCooldown + spellMasteryCooldown(spell.school);
+  const cooldown = Math.max(0, spell.cooldown * (1 + cooldownReduction / 100));
+  return cooldownReduction
     ? `${+cooldown.toFixed(2)}s cooldown (${spell.cooldown}s base)`
     : `${spell.cooldown}s cooldown`;
 };
@@ -20,7 +29,7 @@ const weapons = [...new Set(catalog.jokers.flatMap(joker => joker.weapons))].sor
 const tiers = ['normal', 'fine', 'prime', 'mythic', 'legendary', 'unique'];
 const MAX_SLOTS = 16;
 const MAX_UPGRADE_SLOTS = 26;
-const MAX_WEAPON_RAILS = 2;
+const MAX_WEAPON_UPGRADE_SLOTS = weaponUpgradeData.meta.pointBudget.basePoints + weaponUpgradeData.meta.pointBudget.prestigeBonusMax;
 const SPELL_SLOT_COUNT = 3;
 const $ = id => document.getElementById(id);
 
@@ -45,7 +54,31 @@ const statFamilies = [
   [['damage', 'meleeDamage', 'weakspotDamage', 'regularHitDamage', 'flatDamage', 'markedDamageTaken'], '#f0683a', 'damage'],
   [['damageTaken', 'shield', 'shieldGain', 'minShield', 'healingReceived', 'shieldCost', 'shieldDecay'], '#35c9d6', 'shield']
 ];
-const family = stat => statFamilies.find(group => group[0].includes(stat)) ?? [null, '#d9a441', 'generic'];
+const statGlyphs = { accuracy: 'accuracy', chordCapacity: 'chordCapacity', clipSize: 'clipSize', drawSpeed: 'drawSpeed', lifesteal: 'skull', range: 'range', reloadSpeed: 'reload' };
+const family = stat => {
+  const group = statFamilies.find(entry => entry[0].includes(stat));
+  return group
+    ? [group[0], group[1], statGlyphs[stat] ?? group[2]]
+    : [null, '#d9a441', statGlyphs[stat] ?? 'generic'];
+};
+const weaponStatColors = {
+  damage: '#ff2c2c',
+  attackSpeed: '#ffbc00',
+  range: '#7e94ff',
+  pickupRange: '#7e94ff',
+  drawSpeed: '#00ffda',
+  chordCapacity: '#edaa46',
+  lifesteal: '#a4ff00',
+  clipSize: '#b900ff',
+  reloadSpeed: '#00bfff',
+  accuracy: '#63ffb5',
+  ammoBag: '#b900ff',
+  lingeringTime: '#ff69b4',
+  chargingSpeed: '#bbff5f',
+  fuelAmmo: '#b900ff',
+  elevationForce: '#ffcf23',
+  flightDuration: '#00a8ff'
+};
 const upgradeStats = [
   { id: 'ammoBag', stat: 'ammoBag', label: 'Ammo Bag', perPoint: 5, max: 16, unit: '%' },
   { id: 'health', stat: 'maxHp', label: 'Health', perPoint: 5, max: 6, unit: '%', displayUnit: '' },
@@ -63,6 +96,13 @@ const statIcon = icon => {
     movement: '<path d="M14.5 5 10 10.5h3.25v4.3l-3.8-3.5a1.25 1.25 0 0 0-1.97.37l-2.3 4.6a1.25 1.25 0 1 0 2.24 1.12l1.68-3.36 4.55 4.2a1.25 1.25 0 0 0 2.1-.92V10.5H19L14.5 5z"/>',
     damage: '<path d="m16 3 3 9 10-3-7 8 7 8-10-3-3 7-3-7-10 3 7-8-7-8 10 3z"/>',
     shield: '<path d="M16 3 27 8v8c0 7-4 12-11 15C9 28 5 23 5 16V8z"/><path d="M16 7 23 10v6c0 5-2 8-7 11-5-3-7-6-7-11v-6z" fill="none" stroke="#1a1006" stroke-width="2"/>',
+    accuracy: '<circle cx="16" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="16" cy="16" r="2.5"/><path d="M16 2v5m0 18v5M2 16h5m18 0h5" fill="none" stroke="currentColor" stroke-width="3"/>',
+    chordCapacity: '<path d="M8.5 24V9M18.5 21V6M28.5 18V3M8.5 9 28.5 3" fill="none" stroke="currentColor" stroke-width="2.5"/><ellipse cx="5" cy="25" rx="4" ry="2.5" transform="rotate(-20 5 25)"/><ellipse cx="15" cy="22" rx="4" ry="2.5" transform="rotate(-20 15 22)"/><ellipse cx="25" cy="19" rx="4" ry="2.5" transform="rotate(-20 25 19)"/>',
+    clipSize: '<path d="M3 13 7 5l4 8v14H3zm9 0 4-8 4 8v14h-8zm9 0 4-8 4 8v14h-8z"/>',
+    drawSpeed: '<path d="M12 29V13H4L16 2l12 11h-8v16z"/>',
+    range: '<path d="M4 23 21 6h-8V2h16v16h-5v-8L7 27z"/>',
+    skull: '<path fill-rule="evenodd" d="M16 3C8.8 3 3 8.8 3 16c0 4.1 1.9 7.7 5 10v3h4v-3h2v3h4v-3h2v3h4v-3c3.1-2.3 5-5.9 5-10C29 8.8 23.2 3 16 3zM11 12a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm10 0a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm-5 7-2 3h4z"/>',
+    reload: '<path d="M26 14a10 10 0 0 0-17-7L6 10M6 10V4m0 6h6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 18a10 10 0 0 0 17 7l3-3m0 0v6m0-6h-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
     generic: '<rect x="7" y="7" width="18" height="18" rx="3" transform="rotate(45 16 16)"/>'
   };
   return `<svg viewBox="${icon === 'movement' ? '0 0 24 24' : '0 0 32 32'}" aria-hidden="true">${icons[icon] ?? icons.generic}</svg>`;
@@ -94,6 +134,7 @@ const soulIcon = '<svg class="soul-icon" viewBox="80 85 240 315" role="img" aria
 
 const freshUpgrades = () => ({ ammoBag: 0, health: 0, spellCooldown: 0, speed: 0, jumpHeight: 0 });
 const upgradeSlotCount = upgrades => upgradeStats.reduce((total, stat) => total + upgrades[stat.id], 0);
+const weaponUpgradeCount = upgrades => Object.values(upgrades).reduce((total, points) => total + points, 0);
 const normalizeUpgrades = upgrades => {
   const normalized = freshUpgrades();
   let remaining = MAX_UPGRADE_SLOTS;
@@ -101,6 +142,23 @@ const normalizeUpgrades = upgrades => {
     const points = Number.isInteger(upgrades?.[stat.id]) ? upgrades[stat.id] : 0;
     normalized[stat.id] = Math.max(0, Math.min(points, stat.max, remaining));
     remaining -= normalized[stat.id];
+  }
+  return normalized;
+};
+const normalizeWeaponBuild = (weapon, build) => {
+  let remaining = MAX_WEAPON_UPGRADE_SLOTS;
+  const upgrades = {};
+  for (const stat of weapon.upgrades) {
+    const points = Number.isInteger(build?.upgrades?.[stat.stat]) ? build.upgrades[stat.stat] : 0;
+    upgrades[stat.stat] = Math.max(0, Math.min(points, stat.maxSlots, remaining));
+    remaining -= upgrades[stat.stat];
+  }
+  return { upgrades };
+};
+const normalizeWeaponBuilds = builds => {
+  const normalized = {};
+  for (const weapon of weaponUpgradeData.weapons) {
+    if (builds?.[weapon.id]) normalized[weapon.id] = normalizeWeaponBuild(weapon, builds[weapon.id]);
   }
   return normalized;
 };
@@ -124,7 +182,7 @@ const base64ToBytes = value => {
   return Uint8Array.from(binary, character => character.charCodeAt(0));
 };
 
-const normalizeRail = rail => {
+const normalizeRail = (rail, weaponCategory) => {
   if (!rail || typeof rail !== 'object' || !['hero', 'weapon'].includes(rail.type)) return null;
   const slotsMax = Number.isInteger(rail.slotsMax)
     ? Math.max(1, Math.min(rail.slotsMax, MAX_SLOTS + 1))
@@ -139,9 +197,22 @@ const normalizeRail = rail => {
     counts.set(entry.id, Math.min(joker.maxStack, (counts.get(entry.id) ?? 0) + count));
   }
 
+  const savedWeapon = rail.type === 'weapon'
+    ? weaponUpgradeByName.get(weapons.includes(rail.weapon) ? rail.weapon : weaponUpgradeData.weapons[0].name)
+    : null;
+  const category = rail.type === 'weapon' ? weaponCategory ?? savedWeapon.category : null;
+  const weapon = rail.type === 'weapon'
+    ? savedWeapon.category === category ? savedWeapon : weaponsByCategory[category][0]
+    : null;
+  const weaponBuilds = rail.type === 'weapon' ? normalizeWeaponBuilds(rail.weaponBuilds) : null;
+  if (weapon && !weaponBuilds[weapon.id]) weaponBuilds[weapon.id] = normalizeWeaponBuild(weapon);
   return {
     type: rail.type,
-    ...(rail.type === 'weapon' ? { weapon: weapons.includes(rail.weapon) ? rail.weapon : weapons[0] } : {}),
+    ...(rail.type === 'weapon' ? {
+      category,
+      weapon: weapon.name,
+      weaponBuilds
+    } : {}),
     slotsMax,
     jokers: [...counts].map(([id, count]) => ({ id, count }))
   };
@@ -149,12 +220,16 @@ const normalizeRail = rail => {
 
 const restorePlan = state => {
   const rails = [];
-  let weaponRailCount = 0;
+  const usedWeaponCategories = new Set();
   for (const rail of Array.isArray(state?.rails) ? state.rails : []) {
-    const normalized = normalizeRail(rail);
+    let normalized = normalizeRail(rail);
     if (!normalized) continue;
-    if (normalized.type === 'weapon' && weaponRailCount >= MAX_WEAPON_RAILS) continue;
-    if (normalized.type === 'weapon') weaponRailCount++;
+    if (normalized.type === 'weapon' && usedWeaponCategories.has(normalized.category)) {
+      const missingCategory = weaponCategories.find(category => !usedWeaponCategories.has(category));
+      if (!missingCategory) continue;
+      normalized = normalizeRail(rail, missingCategory);
+    }
+    if (normalized.type === 'weapon') usedWeaponCategories.add(normalized.category);
     rails.push(normalized);
   }
   if (!rails.some(rail => rail.type === 'hero')) rails.unshift(freshPlan().rails[0]);
@@ -209,6 +284,16 @@ const savePlan = async () => {
 
 const activeRail = () => plan.rails[plan.active];
 const countOf = (rail, id) => rail.jokers.find(joker => joker.id === id)?.count ?? 0;
+const equippedSpellCount = school => plan.spells.filter(id => spellById.get(id)?.school === school).length;
+const spellMasteryCooldown = school => {
+  const masteryId = spellSchoolById.get(school)?.masteryJokerId;
+  const heroRail = plan.rails.find(rail => rail.type === 'hero');
+  const mastery = jokerById.get(masteryId);
+  const spellCount = equippedSpellCount(school);
+  if (!mastery || !heroRail || !spellCount) return 0;
+  const cooldown = mastery.stats.find(stat => stat.stat === 'spellCooldown' && stat.unit === '%');
+  return (cooldown?.value ?? 0) * countOf(heroRail, masteryId) * spellCount;
+};
 const setUpgrade = (id, direction) => {
   const stat = upgradeStats.find(entry => entry.id === id);
   if (!stat) return false;
@@ -217,6 +302,23 @@ const setUpgrade = (id, direction) => {
   if (next < 0 || next > stat.max) return false;
   if (direction > 0 && upgradeSlotCount(plan.upgrades) >= MAX_UPGRADE_SLOTS) return false;
   plan.upgrades[id] = next;
+  return true;
+};
+const weaponBuildFor = rail => {
+  const weapon = weaponUpgradeByName.get(rail.weapon);
+  if (!rail.weaponBuilds) rail.weaponBuilds = {};
+  if (!rail.weaponBuilds[weapon.id]) rail.weaponBuilds[weapon.id] = normalizeWeaponBuild(weapon);
+  return { weapon, build: rail.weaponBuilds[weapon.id] };
+};
+const setWeaponUpgrade = (rail, id, direction) => {
+  const { weapon, build } = weaponBuildFor(rail);
+  const stat = weapon.upgrades.find(entry => entry.stat === id);
+  if (!stat) return false;
+  const current = build.upgrades[id];
+  const next = current + direction;
+  const total = weaponUpgradeCount(build.upgrades);
+  if (next < 0 || next > stat.maxSlots || (direction > 0 && total >= MAX_WEAPON_UPGRADE_SLOTS)) return false;
+  build.upgrades[id] = next;
   return true;
 };
 const slotsUsedOnRail = rail => rail.jokers.reduce((total, entry) =>
@@ -394,7 +496,7 @@ function renderSpells() {
       ? spellMetaText(spell)
       : 'Choose a spell';
     slot.spellEffect.textContent = spell?.effect ?? '';
-    savePlan();
+    update();
     closeSpellPicker();
   };
 
@@ -454,19 +556,36 @@ function renderCatalog() {
 }
 
 function renderTabs() {
-  $('tabs').innerHTML = plan.rails.map((rail, index) =>
-    `<button class="tab ${index === plan.active ? 'on' : ''}" data-i="${index}">${rail.type === 'hero' ? 'Hero' : (rail.weapon || 'Weapon')}</button>`).join('') +
-    `<button class="tab" id="addRail" ${plan.rails.filter(rail => rail.type === 'weapon').length >= MAX_WEAPON_RAILS ? 'disabled' : ''}>+ Weapon</button>`;
+  const heroTabs = plan.rails.map((rail, index) =>
+    rail.type === 'hero'
+      ? `<button class="tab ${index === plan.active ? 'on' : ''}" data-i="${index}">Hero</button>`
+      : '').join('');
+  const weaponTabs = weaponCategories.map(category => {
+    const index = plan.rails.findIndex(rail => rail.type === 'weapon' && rail.category === category);
+    if (index < 0) return `<button class="tab" id="add${weaponCategoryLabel(category)}">+ ${weaponCategoryLabel(category)}</button>`;
+    const rail = plan.rails[index];
+    return `<button class="tab ${index === plan.active ? 'on' : ''}" data-i="${index}">${rail.weapon || 'Weapon'}</button>`;
+  }).join('');
+  $('tabs').innerHTML = heroTabs + weaponTabs;
   $('tabs').querySelectorAll('[data-i]').forEach(button => button.onclick = () => {
     plan.active = +button.dataset.i;
     renderAll();
   });
-  $('addRail').onclick = () => {
-    if (plan.rails.filter(rail => rail.type === 'weapon').length >= MAX_WEAPON_RAILS) return;
-    plan.rails.push({ type: 'weapon', weapon: 'Revolver', slotsMax: DEFAULT_SLOTS, jokers: [] });
-    plan.active = plan.rails.length - 1;
-    renderAll();
-  };
+  weaponCategories
+    .filter(category => !plan.rails.some(rail => rail.type === 'weapon' && rail.category === category))
+    .forEach(category => {
+      $(`add${weaponCategoryLabel(category)}`).onclick = () => {
+        plan.rails.push({
+          type: 'weapon',
+          category,
+          weapon: weaponsByCategory[category][0].name,
+          slotsMax: DEFAULT_SLOTS,
+          jokers: []
+        });
+        plan.active = plan.rails.length - 1;
+        renderAll();
+      };
+    });
 }
 
 function slotCircles(rail, stats) {
@@ -515,6 +634,31 @@ function renderUpgrades() {
   </div>`;
 }
 
+function renderWeaponUpgrades(rail) {
+  const { weapon, build } = weaponBuildFor(rail);
+  const total = weaponUpgradeCount(build.upgrades);
+  const totalPips = Array.from({ length: MAX_WEAPON_UPGRADE_SLOTS }, (_, index) =>
+    `<i class="upgrade-total-pip ${index < total ? 'on' : ''}"></i>`).join('');
+  const rows = weapon.upgrades.map(stat => {
+    const points = build.upgrades[stat.stat], [, defaultColor, glyph] = family(stat.stat);
+    const color = weaponStatColors[stat.stat] ?? defaultColor;
+    const value = points * stat.perSlot;
+    const pips = Array.from({ length: stat.maxSlots }, (_, index) =>
+      `<i class="upgrade-pip ${index < points ? 'on' : ''}"></i>`).join('');
+    return `<div class="upgrade-row" style="--c:${color}">
+      <span class="upgrade-label"><span class="upgrade-icon">${statIcon(glyph)}</span><span>${stat.label}</span></span>
+      <span class="upgrade-value">+${value}${stat.unit === 'flat' ? '' : stat.unit}</span>
+      <button class="upgrade-arrow" data-weapon-upgrade="${stat.stat}" data-d="-1" ${points === 0 ? 'disabled' : ''}>&lt;</button>
+      <span class="upgrade-pips">${pips}</span>
+      <button class="upgrade-arrow" data-weapon-upgrade="${stat.stat}" data-d="1" ${points >= stat.maxSlots || total >= MAX_WEAPON_UPGRADE_SLOTS ? 'disabled' : ''}>&gt;</button>
+    </div>`;
+  }).join('');
+  return `<div class="upgrade-panel">
+    <div class="upgrade-head"><span class="upgrade-title">Upgrade slots</span><div class="upgrade-total-pips">${totalPips}</div><span class="upgrade-count">${total}/${MAX_WEAPON_UPGRADE_SLOTS}</span></div>
+    ${rows}
+  </div>`;
+}
+
 function renderRail(build) {
   const rail = activeRail(), stats = build[plan.active];
   $('railTitle').textContent = rail.type === 'hero' ? 'Hero' : (rail.weapon || 'Weapon');
@@ -523,7 +667,7 @@ function renderRail(build) {
   const pips = Array.from({ length: pipCount }, (_, index) =>
     `<i class="pip ${index < stats.slotsUsed ? (stats.slotsUsed > stats.slotsMax ? 'over' : 'on') : ''}"></i>`).join('');
   $('rail').innerHTML = `
-    ${rail.type === 'hero' ? renderUpgrades() : ''}
+    ${rail.type === 'hero' ? renderUpgrades() : renderWeaponUpgrades(rail)}
     <div class="pipwrap"><span class="l">Joker slots</span><div class="pips">${pips}</div><span class="cnt">${stats.slotsUsed}/${stats.slotsMax}</span></div>
     ${rail.type === 'weapon' ? `<div class="setrow"><span class="l">Weapon</span>${stepper('weaponStep', rail.weapon)}</div>` : ''}
     <div class="setrow"><span class="l">Unlocked slots</span>${stepper('slotStep', stats.slotsMax)}${rail.type === 'weapon' ? '<button class="btn" id="delRail">Remove</button>' : ''}</div>
@@ -540,8 +684,9 @@ function renderRail(build) {
     $('weaponStep').onclick = event => {
       const direction = +event.target.dataset.d;
       if (!direction) return;
-      const index = weapons.indexOf(rail.weapon);
-      rail.weapon = weapons[(index + direction + weapons.length) % weapons.length];
+      const categoryWeapons = weaponsByCategory[rail.category];
+      const index = categoryWeapons.findIndex(weapon => weapon.name === rail.weapon);
+      rail.weapon = categoryWeapons[(index + direction + categoryWeapons.length) % categoryWeapons.length].name;
       renderTabs();
       update();
     };
@@ -565,6 +710,9 @@ function renderRail(build) {
   $('rail').querySelectorAll('[data-upgrade]').forEach(button => button.onclick = () => {
     if (setUpgrade(button.dataset.upgrade, +button.dataset.d)) update();
   });
+  $('rail').querySelectorAll('[data-weapon-upgrade]').forEach(button => button.onclick = () => {
+    if (setWeaponUpgrade(rail, button.dataset.weaponUpgrade, +button.dataset.d)) update();
+  });
   $('rail').querySelectorAll('[data-focus]').forEach(button => button.onclick = () => $('q')?.focus());
 }
 
@@ -582,21 +730,37 @@ function statRow(stat, unit, value, options = {}) {
 
 function renderStats(build) {
   const bonuses = build[plan.active].effective;
+  const rail = activeRail();
   const currentStats = {};
   for (const bonus of Object.values(bonuses.passive)) {
     currentStats[`${bonus.stat}|${bonus.unit}`] = bonus;
   }
   const totalStats = { ...currentStats };
-  for (const stat of upgradeStats) {
-    const points = plan.upgrades[stat.id];
-    if (!points) continue;
-    const unit = stat.totalUnit ?? stat.unit;
-    const key = `${stat.stat}|${unit}`;
-    totalStats[key] = {
-      stat: stat.stat,
-      unit,
-      value: (totalStats[key]?.value ?? 0) + points * stat.perPoint * (stat.totalSign ?? 1)
-    };
+  if (rail.type === 'weapon') {
+    const { weapon, build: weaponBuild } = weaponBuildFor(rail);
+    for (const stat of weapon.upgrades) {
+      const points = weaponBuild.upgrades[stat.stat];
+      if (!points) continue;
+      const key = `${stat.stat}|${stat.unit}`;
+      totalStats[key] = {
+        stat: stat.stat,
+        unit: stat.unit,
+        value: (totalStats[key]?.value ?? 0) + points * stat.perSlot
+      };
+    }
+  }
+  if (rail.type === 'hero') {
+    for (const stat of upgradeStats) {
+      const points = plan.upgrades[stat.id];
+      if (!points) continue;
+      const unit = stat.totalUnit ?? stat.unit;
+      const key = `${stat.stat}|${unit}`;
+      totalStats[key] = {
+        stat: stat.stat,
+        unit,
+        value: (totalStats[key]?.value ?? 0) + points * stat.perPoint * (stat.totalSign ?? 1)
+      };
+    }
   }
 
   const oldStats = previousStats[plan.active] ?? {};
@@ -622,7 +786,12 @@ function renderStats(build) {
     return statRow(stat, unit, value, changed ? { changed, was: oldValue } : {});
   }).join('');
   const conditional = bonuses.conditional
-    .map(bonus => statRow(bonus.stat, bonus.unit, bonus.value, { note: bonus.note }))
+    .map(bonus => {
+      const school = spellData.schools.find(entry =>
+        bonus.sources.includes(jokerById.get(entry.masteryJokerId)?.name));
+      const value = school ? bonus.value * equippedSpellCount(school.id) : bonus.value;
+      return statRow(bonus.stat, bonus.unit, value, { note: bonus.note });
+    })
     .join('');
   $('stats').innerHTML = `
     <h3>Total</h3>${totalRows || '<div class="empty">None.</div>'}
@@ -638,6 +807,11 @@ function update() {
   renderRail(build);
   const totalStats = renderStats(build);
   totalSpellCooldown = totalStats['spellCooldown|%']?.value ?? 0;
+  if (activeRail().type === 'weapon') {
+    const spellCooldownUpgrade = upgradeStats.find(stat => stat.id === 'spellCooldown');
+    totalSpellCooldown += plan.upgrades[spellCooldownUpgrade.id] *
+      spellCooldownUpgrade.perPoint * (spellCooldownUpgrade.totalSign ?? 1);
+  }
   updateSpellCooldownDisplays();
   renderCatalog();
   renderSoulTotal();

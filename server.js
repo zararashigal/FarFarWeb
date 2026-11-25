@@ -7,10 +7,12 @@ import path from 'node:path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const jokers = JSON.parse(readFileSync(path.join(__dirname, 'public', 'jokers.json'), 'utf8')).jokers;
 const spells = JSON.parse(readFileSync(path.join(__dirname, 'spells.json'), 'utf8'));
+const weaponUpgrades = JSON.parse(readFileSync(path.join(__dirname, 'weapon-upgrades.json'), 'utf8'));
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/api/spells', (_req, res) => res.json(spells));
+app.get('/api/weapon-upgrades', (_req, res) => res.json(weaponUpgrades));
 app.get('/api/qr', async (req, res, next) => {
   const value = req.query.url;
   if (typeof value !== 'string' || value.length > 2048) return res.status(400).send('Invalid QR URL');

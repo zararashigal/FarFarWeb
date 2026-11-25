@@ -58,8 +58,6 @@ export function calcRail(rail, jokerById, totalJokers) {
     for (const bonus of joker.stats) {
       if (PARAM_STATS.has(bonus.stat)) continue;
       const value = bonus.value * count;
-
-      // These perks scale from the rail, not only their own stack count.
       if (joker.id === 'joker-trick') {
         addPassive(result.passive, bonus.stat, bonus.unit, value * result.tiers.size);
         continue;

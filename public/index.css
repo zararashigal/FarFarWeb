@@ -811,6 +811,11 @@ section {
     color: var(--gold2);
 }
 
+.stepper button:disabled {
+    opacity: .3;
+    cursor : not-allowed;
+}
+
 /* pip bar (like "Upgrade slots") */
 .pipwrap {
     display      : flex;
