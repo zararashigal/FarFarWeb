@@ -32,6 +32,18 @@ const MAX_UPGRADE_SLOTS = 26;
 const MAX_WEAPON_UPGRADE_SLOTS = weaponUpgradeData.meta.pointBudget.basePoints + weaponUpgradeData.meta.pointBudget.prestigeBonusMax;
 const SPELL_SLOT_COUNT = 3;
 const $ = id => document.getElementById(id);
+const scrollIdleTimers = new WeakMap();
+
+document.addEventListener('scroll', event => {
+  const target = event.target === document ? document.documentElement : event.target;
+  if (!(target instanceof HTMLElement)) return;
+  target.classList.add('is-scrolling');
+  clearTimeout(scrollIdleTimers.get(target));
+  scrollIdleTimers.set(target, setTimeout(() => {
+    target.classList.remove('is-scrolling');
+    scrollIdleTimers.delete(target);
+  }, 600));
+}, true);
 
 const labels = {
   attackSpeed: 'Attack Speed', reloadSpeed: 'Reload Speed', emptyReloadSpeed: 'Empty-Clip Reload', damage: 'Damage',
