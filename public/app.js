@@ -805,13 +805,12 @@ function renderStats(build) {
 function update() {
   const build = calcBuild(catalog, plan.rails, jokerById);
   renderRail(build);
-  const totalStats = renderStats(build);
-  totalSpellCooldown = totalStats['spellCooldown|%']?.value ?? 0;
-  if (activeRail().type === 'weapon') {
-    const spellCooldownUpgrade = upgradeStats.find(stat => stat.id === 'spellCooldown');
-    totalSpellCooldown += plan.upgrades[spellCooldownUpgrade.id] *
-      spellCooldownUpgrade.perPoint * (spellCooldownUpgrade.totalSign ?? 1);
-  }
+  renderStats(build);
+  const heroIndex = plan.rails.findIndex(rail => rail.type === 'hero');
+  const heroSpellCooldown = build[heroIndex]?.passive['spellCooldown|%']?.value ?? 0;
+  const spellCooldownUpgrade = upgradeStats.find(stat => stat.id === 'spellCooldown');
+  totalSpellCooldown = heroSpellCooldown + plan.upgrades[spellCooldownUpgrade.id] *
+    spellCooldownUpgrade.perPoint * (spellCooldownUpgrade.totalSign ?? 1);
   updateSpellCooldownDisplays();
   renderCatalog();
   renderSoulTotal();

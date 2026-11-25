@@ -94,13 +94,9 @@ export function calcBuild(catalog, rails, jokerById = indexJokers(catalog.jokers
   const totalJokers = rails.reduce((total, rail) =>
     total + rail.jokers.reduce((count, joker) => count + (joker.count ?? 1), 0), 0);
   const results = rails.map(rail => calcRail(rail, jokerById, totalJokers));
-  const heroIndex = rails.findIndex(rail => rail.type === 'hero');
-  const hero = results[heroIndex] ?? { passive: {}, conditional: [] };
 
-  return results.map((result, index) => ({
+  return results.map(result => ({
     ...result,
-    effective: rails[index].type === 'weapon'
-      ? mergeRails(hero, result)
-      : { passive: result.passive, conditional: result.conditional }
+    effective: { passive: result.passive, conditional: result.conditional }
   }));
 }
