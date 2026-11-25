@@ -3,14 +3,22 @@ import QRCode from 'qrcode';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { createSteamStatusMonitor } from './steam-status.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const jokers = JSON.parse(readFileSync(path.join(__dirname, 'public', 'jokers.json'), 'utf8')).jokers;
 const spells = JSON.parse(readFileSync(path.join(__dirname, 'spells.json'), 'utf8'));
 const weaponUpgrades = JSON.parse(readFileSync(path.join(__dirname, 'weapon-upgrades.json'), 'utf8'));
 const app = express();
+const steamStatus = createSteamStatusMonitor();
+steamStatus.start();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/status', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'status.html')));
+app.get('/api/status', (_req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json({ steam: steamStatus.getStatus() });
+});
 app.get('/api/spells', (_req, res) => res.json(spells));
 app.get('/api/weapon-upgrades', (_req, res) => res.json(weaponUpgrades));
 app.get('/api/qr', async (req, res, next) => {
