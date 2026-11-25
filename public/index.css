@@ -989,7 +989,7 @@ section {
 .upgrade-pips {
     display    : flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap        : 2px;
     min-width  : 0;
 }
@@ -1058,8 +1058,11 @@ section {
 .slot.filled {
     background  : var(--tc);
     color       : #1a1006;
-    font-size   : 14px;
+    font-family : "Rye", serif;
+    font-size   : 15px;
     border-color: rgba(255, 255, 255, .55);
+    -webkit-text-stroke: 1.2px #fff;
+    paint-order : stroke fill;
 }
 
 .slot.cont {

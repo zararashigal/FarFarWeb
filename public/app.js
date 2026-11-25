@@ -588,6 +588,22 @@ function renderTabs() {
     });
 }
 
+function romanNumeral(number) {
+  const numerals = [
+    [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+    [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+    [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
+  ];
+  let result = '';
+  for (const [value, numeral] of numerals) {
+    while (number >= value) {
+      result += numeral;
+      number -= value;
+    }
+  }
+  return result;
+}
+
 function slotCircles(rail, stats) {
   const cells = [];
   let number = 0;
@@ -604,7 +620,7 @@ function slotCircles(rail, stats) {
   let html = '';
   for (let index = 0; index < rows; index++) {
     const cell = cells[index];
-    if (cell) html += `<button class="slot filled ${index >= stats.slotsMax ? 'over' : ''} ${cell.first ? '' : 'cont'}" style="--tc:${tierColors[cell.joker.tier]}" data-rm="${cell.id}" title="${cell.joker.name}">${cell.first ? cell.number : ''}</button>`;
+    if (cell) html += `<button class="slot filled ${index >= stats.slotsMax ? 'over' : ''} ${cell.first ? '' : 'cont'}" style="--tc:${tierColors[cell.joker.tier]}" data-rm="${cell.id}" title="${cell.joker.name}">${cell.first ? romanNumeral(cell.number) : ''}</button>`;
     else if (index < stats.slotsMax) html += '<button class="slot" data-focus title="Empty slot">+</button>';
     else html += `<button class="slot locked" tabindex="-1"></button>`;
   }
