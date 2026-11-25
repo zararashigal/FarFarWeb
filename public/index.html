@@ -20,7 +20,28 @@
 <body>
   <div id="app">
     <header>
-      <h1>Far Far Web - A WebUI for Far Far West Builds</h1>
+      <div class="header-title">
+        <img class="brand-logo" src="favicon.svg" alt="" aria-hidden="true">
+        <div class="header-copy">
+          <h1>Far Far Web</h1>
+          <span class="byline">made with
+            <svg class="byline-heart" viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <clipPath id="byline-heart-shape">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </clipPath>
+              </defs>
+              <g clip-path="url(#byline-heart-shape)">
+                <path fill="#5bcefa" d="M0 0h24v4.8H0z"/>
+                <path fill="#f5a9b8" d="M0 4.8h24v4.8H0z"/>
+                <path fill="#fff" d="M0 9.6h24v4.8H0z"/>
+                <path fill="#f5a9b8" d="M0 14.4h24v4.8H0z"/>
+                <path fill="#5bcefa" d="M0 19.2h24v4.8H0z"/>
+              </g>
+            </svg>
+            by <span class="byline-name">ashley orion</span></span>
+        </div>
+      </div>
       <span class="sp"></span>
       <div class="header-build">
         <label class="top-stat build-name">Build name: <input id="buildName" type="text" maxlength="12" autocomplete="off"></label>

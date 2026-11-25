@@ -57,12 +57,54 @@ header {
     border-bottom: 1px solid rgba(0, 0, 0, .6);
 }
 
+.header-title {
+    display    : flex;
+    align-items: center;
+    gap        : 10px;
+}
+
+.header-copy {
+    display       : flex;
+    flex-direction: column;
+    gap           : 2px;
+}
+
 header h1 {
     margin        : 0;
     font-size     : 18px;
     color         : var(--gold);
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+header .brand-logo {
+    width : 32px;
+    height: 42px;
+    flex  : none;
+}
+
+header .byline {
+    align-self           : flex-start;
+    color               : var(--gold);
+    font-size           : 13px;
+    letter-spacing      : .6px;
+    line-height         : 1;
+    text-transform      : uppercase;
+}
+
+header .byline-heart {
+    width         : 15px;
+    height        : 15px;
+    vertical-align: -4px;
+}
+
+header .byline-name {
+    display             : inline-block;
+    color               : transparent;
+    background          : linear-gradient(90deg, #5bcefa 0 20%, #f5a9b8 20% 40%, #fff 40% 60%, #f5a9b8 60% 80%, #5bcefa 80%);
+    background-clip     : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 header .sp {
@@ -273,7 +315,7 @@ main {
         flex-wrap: wrap;
     }
 
-    header h1 {
+    header .header-title {
         flex: 1 0 100%;
     }
 
