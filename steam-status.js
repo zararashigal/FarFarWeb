@@ -23,10 +23,10 @@ export function createSteamStatusMonitor(fetchStatus = fetchSteamStatus, now = D
   let latest = { state: 'pending', playerCount: null, checkedAt: null, responseTimeMs: null, playerChange: null };
   let history = [];
   let checking = false;
+  let inFlight = null;
   let nextCheckAt = null;
 
-  async function check() {
-    if (checking) return;
+  async function runCheck() {
     checking = true;
     const started = performance.now();
     try {
@@ -61,6 +61,23 @@ export function createSteamStatusMonitor(fetchStatus = fetchSteamStatus, now = D
     }
   }
 
+  function check() {
+    if (!inFlight) {
+      inFlight = runCheck().finally(() => { inFlight = null; });
+    }
+    return inFlight;
+  }
+
+  async function getFreshStatus() {
+    if (inFlight) {
+      await inFlight;
+    } else if (nextCheckAt === null || now() >= Date.parse(nextCheckAt)) {
+      nextCheckAt = new Date(now() + CHECK_INTERVAL).toISOString();
+      await check();
+    }
+    return getStatus();
+  }
+
   function getStatus() {
     const samples = history.filter(sample => now() - Date.parse(sample.checkedAt) <= HISTORY_WINDOW);
     const counts = samples.filter(sample => sample.playerCount !== null).map(sample => sample.playerCount);
@@ -84,5 +101,5 @@ export function createSteamStatusMonitor(fetchStatus = fetchSteamStatus, now = D
     return timer;
   }
 
-  return { check, getStatus, start };
+  return { check, getStatus, getFreshStatus, start };
 }

@@ -11,13 +11,25 @@ const spells = JSON.parse(readFileSync(path.join(__dirname, 'spells.json'), 'utf
 const weaponUpgrades = JSON.parse(readFileSync(path.join(__dirname, 'weapon-upgrades.json'), 'utf8'));
 const app = express();
 const steamStatus = createSteamStatusMonitor();
-steamStatus.start();
+const onVercel = Boolean(process.env.VERCEL);
+if (!onVercel) steamStatus.start();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/status', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'status.html')));
-app.get('/api/status', (_req, res) => {
-  res.set('Cache-Control', 'no-store');
-  res.json({ steam: steamStatus.getStatus() });
+app.get('/api/status', async (_req, res, next) => {
+  try {
+    const steam = onVercel ? await steamStatus.getFreshStatus() : steamStatus.getStatus();
+    if (onVercel) {
+      const maxAge = Math.floor((Date.parse(steam.nextCheckAt) - Date.now()) / 1000);
+      res.set('Cache-Control', 'public, max-age=0, must-revalidate');
+      if (maxAge > 0) res.set('Vercel-CDN-Cache-Control', `public, max-age=${maxAge}`);
+    } else {
+      res.set('Cache-Control', 'no-store');
+    }
+    res.json({ steam });
+  } catch (error) {
+    next(error);
+  }
 });
 app.get('/api/spells', (_req, res) => res.json(spells));
 app.get('/api/weapon-upgrades', (_req, res) => res.json(weaponUpgrades));

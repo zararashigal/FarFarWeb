@@ -66,7 +66,7 @@ async function updateStatus() {
   fetching = true;
   clearTimeout(refreshTimer);
   try {
-    const response = await fetch('/api/status', { cache: 'no-store' });
+    const response = await fetch('/api/status');
     if (!response.ok) throw new Error(`Status API returned HTTP ${response.status}`);
     const { steam } = await response.json();
     const scheduled = Date.parse(steam.nextCheckAt);
@@ -77,7 +77,7 @@ async function updateStatus() {
     const change = current ? steam.playerChange : null;
     playerChange.textContent = Number.isSafeInteger(change) ? `${change > 0 ? '+' : ''}${change.toLocaleString()}` : '-';
     recentPeak.textContent = Number.isSafeInteger(steam.recentPeak) ? steam.recentPeak.toLocaleString() : '-';
-    responseTime.textContent = current && Number.isSafeInteger(steam.responseTimeMs) ? `${steam.responseTimeMs} ms` : '-';
+    responseTime.textContent = steam.state === 'available' && Number.isSafeInteger(steam.responseTimeMs) ? `${steam.responseTimeMs} ms` : '-';
     renderHistory(steam.history);
     steamStatus.className = '';
     if (steam.state === 'available') {
@@ -120,7 +120,7 @@ async function updateStatus() {
     fetching = false;
     updateCountdown();
     const remaining = nextCheckAt === null ? 0 : nextCheckAt - Date.now();
-    const delay = checking ? 2_000 : remaining > 0 ? Math.min(90_000, remaining + 1_000) : 90_000;
+    const delay = checking ? 2_000 : remaining > 0 ? Math.min(90_000, remaining + 1_000) : nextCheckAt === null ? 90_000 : 2_000;
     refreshTimer = setTimeout(() => {
       if (!document.hidden) updateStatus();
     }, delay);
