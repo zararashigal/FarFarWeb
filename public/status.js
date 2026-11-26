@@ -1,11 +1,18 @@
 const playerCount = document.getElementById('playerCount');
-const steamStatus = document.getElementById('steamStatus');
+const epicElements = {
+  lobbies: document.getElementById('epicLobbies'),
+  sessions: document.getElementById('epicSessions'),
+  gameAuthentication: document.getElementById('epicGameAuthentication'),
+  accountAuthentication: document.getElementById('epicAccountAuthentication')
+};
+const gameLiftStatus = document.getElementById('gameLiftStatus');
 const playerChange = document.getElementById('playerChange');
 const recentPeak = document.getElementById('recentPeak');
 const responseTime = document.getElementById('responseTime');
 const playerHistory = document.getElementById('playerHistory');
 const historyStart = document.getElementById('historyStart');
 const historyEnd = document.getElementById('historyEnd');
+const historyTooltip = document.getElementById('historyTooltip');
 const statusCountdown = document.getElementById('statusCountdown');
 let nextCheckAt = null, checking = false, fetching = false, refreshTimer;
 
@@ -22,7 +29,63 @@ function updateCountdown() {
   }
 }
 
+function setEpicStatus(element, state, status) {
+  element.className = '';
+  if (state === 'pending') {
+    element.textContent = 'Checking...';
+  } else if (state === 'stale') {
+    element.textContent = 'Out of date';
+  } else if (status === 'operational') {
+    element.textContent = 'Online';
+    element.className = 'status-reachable';
+  } else if (status === 'degraded_performance') {
+    element.textContent = 'Degraded';
+  } else if (status === 'under_maintenance') {
+    element.textContent = 'Maintenance';
+  } else {
+    element.textContent = 'Offline';
+    element.className = 'status-unreachable';
+  }
+}
+
+function renderEpicStatus(steam) {
+  for (const [key, element] of Object.entries(epicElements)) {
+    setEpicStatus(element, steam.state, steam.epicStatus?.[key]);
+  }
+}
+
+function showPointTooltip(dot, sample) {
+  const container = historyTooltip.parentElement.getBoundingClientRect();
+  const point = dot.getBoundingClientRect();
+  historyTooltip.firstElementChild.textContent = `${sample.playerCount.toLocaleString()} players`;
+  historyTooltip.lastElementChild.textContent = new Date(sample.checkedAt).toLocaleString();
+  historyTooltip.style.display = 'flex';
+  const half = historyTooltip.offsetWidth / 2;
+  const center = point.left + point.width / 2 - container.left;
+  historyTooltip.style.left = `${Math.min(Math.max(center, half), container.width - half)}px`;
+  historyTooltip.style.top = `${point.top - container.top}px`;
+}
+
+function renderGameLiftStatus(steam) {
+  const { gameLift } = steam;
+  gameLiftStatus.className = '';
+  gameLiftStatus.title = '';
+  if (steam.state === 'pending') {
+    gameLiftStatus.textContent = 'Checking...';
+  } else if (steam.state === 'stale') {
+    gameLiftStatus.textContent = 'Out of date';
+  } else if (!gameLift) {
+    gameLiftStatus.textContent = 'Unavailable';
+  } else {
+    gameLiftStatus.textContent = `${gameLift.online}/${gameLift.total} online`;
+    if (gameLift.online === gameLift.total) gameLiftStatus.className = 'status-reachable';
+    else if (gameLift.online === 0) gameLiftStatus.className = 'status-unreachable';
+    if (gameLift.offline.length) gameLiftStatus.title = `Not responding: ${gameLift.offline.join(', ')}`;
+  }
+}
+
 function renderHistory(history) {
+  historyTooltip.style.display = '';
   playerHistory.replaceChildren();
   historyStart.textContent = '';
   historyEnd.textContent = '';
@@ -33,6 +96,7 @@ function renderHistory(history) {
   }
   const counts = valid.map(sample => sample.playerCount);
   const min = Math.min(...counts), max = Math.max(...counts);
+  const peak = max || 1;
   const first = Date.parse(history[0].checkedAt), last = Date.parse(history[history.length - 1].checkedAt);
   let path = '', drawing = false, previousTime = null;
   for (const sample of history) {
@@ -43,7 +107,7 @@ function renderHistory(history) {
     const time = Date.parse(sample.checkedAt);
     if (previousTime !== null && time - previousTime > 180_000) drawing = false;
     const x = last === first ? 300 : 4 + (time - first) / (last - first) * 592;
-    const y = max === min ? 50 : 96 - (sample.playerCount - min) / (max - min) * 92;
+    const y = 96 - sample.playerCount / peak * 92;
     path += `${drawing ? 'L' : 'M'}${x.toFixed(2)} ${y.toFixed(2)} `;
     drawing = true;
     previousTime = time;
@@ -51,6 +115,8 @@ function renderHistory(history) {
     dot.setAttribute('cx', x);
     dot.setAttribute('cy', y);
     dot.setAttribute('r', '2');
+    dot.addEventListener('mouseenter', () => showPointTooltip(dot, sample));
+    dot.addEventListener('mouseleave', () => { historyTooltip.style.display = ''; });
     playerHistory.append(dot);
   }
   const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -79,26 +145,21 @@ async function updateStatus() {
     recentPeak.textContent = Number.isSafeInteger(steam.recentPeak) ? steam.recentPeak.toLocaleString() : '-';
     responseTime.textContent = steam.state === 'available' && Number.isSafeInteger(steam.responseTimeMs) ? `${steam.responseTimeMs} ms` : '-';
     renderHistory(steam.history);
-    steamStatus.className = '';
+    renderEpicStatus(steam);
+    renderGameLiftStatus(steam);
     if (steam.state === 'available') {
-      steamStatus.textContent = 'Online';
-      steamStatus.className = 'status-reachable';
       const validCount = Number.isSafeInteger(steam.playerCount) && steam.playerCount >= 0;
       playerCount.textContent = validCount ? steam.playerCount.toLocaleString() : 'Unavailable';
       playerCount.title = validCount
         ? `Steam player count checked ${checkedAt}.`
         : `Steam returned an invalid player count. Last checked ${checkedAt}.`;
     } else if (steam.state === 'stale') {
-      steamStatus.textContent = 'Out of date';
       playerCount.textContent = 'Unavailable';
       playerCount.title = `Steam player count is out of date. Last checked ${checkedAt}.`;
     } else if (steam.state === 'pending') {
-      steamStatus.textContent = 'Checking...';
       playerCount.textContent = 'Checking...';
       playerCount.title = 'Waiting for the first Steam player count check.';
     } else {
-      steamStatus.textContent = 'Offline';
-      steamStatus.className = 'status-unreachable';
       playerCount.textContent = 'Unavailable';
       playerCount.title = checkedAt
         ? `Steam player count could not be retrieved. Last checked ${checkedAt}.`
@@ -108,8 +169,13 @@ async function updateStatus() {
     console.error('Could not load status:', error);
     nextCheckAt = null;
     checking = false;
-    steamStatus.textContent = 'Unavailable';
-    steamStatus.className = '';
+    gameLiftStatus.textContent = 'Unavailable';
+    gameLiftStatus.className = '';
+    gameLiftStatus.title = '';
+    for (const element of Object.values(epicElements)) {
+      element.textContent = 'Unavailable';
+      element.className = '';
+    }
     playerCount.textContent = 'Unavailable';
     playerChange.textContent = '-';
     recentPeak.textContent = '-';

@@ -10,11 +10,13 @@
 }
 
 .status-main {
-    display    : block;
-    width      : 100%;
-    max-width  : 760px;
-    margin     : 0 auto;
-    flex       : none;
+    display       : flex;
+    flex-direction: column;
+    gap           : 12px;
+    width         : 100%;
+    max-width     : 760px;
+    margin        : 0 auto;
+    flex          : none;
 }
 
 .status-panel {
@@ -52,6 +54,7 @@
 }
 
 .status-history {
+    position     : relative;
     padding      : 10px 12px;
     background   : var(--row);
     border-left  : 3px solid var(--gold);
@@ -76,8 +79,17 @@
     vector-effect : non-scaling-stroke;
 }
 
+.status-history .spell-tooltip {
+    left     : 0;
+    top      : 0;
+    width    : max-content;
+    transform: translate(-50%, calc(-100% - 10px));
+}
+
 .status-history circle {
-    fill: var(--gold2);
+    fill        : var(--gold2);
+    stroke      : transparent;
+    stroke-width: 12;
 }
 
 .status-history-labels {

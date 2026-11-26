@@ -28,11 +28,34 @@
     </header>
     <main class="status-main">
       <section class="status-panel">
-        <div class="ttl"><h2>Server status</h2><span class="status-countdown" id="statusCountdown" aria-label="Time until next check">Checking...</span></div>
+        <div class="ttl"><h2>Status</h2><span class="status-countdown" id="statusCountdown" aria-label="Time until next check">Checking...</span></div>
         <div class="status-row">
-          <span title="Based on Steam's player count API, not a direct game server check.">Far Far West servers</span>
-          <strong id="steamStatus" role="status">Checking...</strong>
+          <span>Epic Online Services - Lobbies</span>
+          <strong id="epicLobbies">Checking...</strong>
         </div>
+        <div class="status-row">
+          <span>Epic Online Services - Sessions</span>
+          <strong id="epicSessions">Checking...</strong>
+        </div>
+        <div class="status-row">
+          <span>Epic Game Services - Authentication</span>
+          <strong id="epicGameAuthentication">Checking...</strong>
+        </div>
+        <div class="status-row">
+          <span>Epic Account Services - Authentication</span>
+          <strong id="epicAccountAuthentication">Checking...</strong>
+        </div>
+        <div class="status-row">
+          <span>AWS GameLift regions</span>
+          <strong id="gameLiftStatus">Checking...</strong>
+        </div>
+        <div class="status-row">
+          <span>Steam API response time</span>
+          <strong id="responseTime">-</strong>
+        </div>
+      </section>
+      <section class="status-panel">
+        <div class="ttl"><h2>Statistics</h2></div>
         <div class="status-row">
           <span>Steam players in game</span>
           <strong id="playerCount">Checking...</strong>
@@ -45,13 +68,10 @@
           <span>Recent player peak</span>
           <strong id="recentPeak">-</strong>
         </div>
-        <div class="status-row">
-          <span>Steam API response time</span>
-          <strong id="responseTime">-</strong>
-        </div>
-        <div class="status-history" title="Temporary history, up to 24 hours. History may reset or differ between server instances.">
+        <div class="status-history">
           <div class="status-history-title">Recent Steam player activity</div>
           <svg id="playerHistory" viewBox="0 0 600 100" preserveAspectRatio="none" role="img" aria-label="Recent Steam player activity"></svg>
+          <div class="spell-tooltip" id="historyTooltip" role="tooltip"><strong></strong><span class="spell-meta"></span></div>
           <div class="status-history-labels"><span id="historyStart"></span><span id="historyEnd"></span></div>
         </div>
         <a class="status-link" href="https://store.steampowered.com/news/app/3124540">Official Far Far West announcements on Steam</a>

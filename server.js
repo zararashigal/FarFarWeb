@@ -36,7 +36,6 @@ app.get('/api/weapon-upgrades', (_req, res) => res.json(weaponUpgrades));
 app.get('/api/qr', async (req, res, next) => {
   const value = req.query.url;
   if (typeof value !== 'string' || value.length > 2048) return res.status(400).send('Invalid QR URL');
-
   let url;
   try { url = new URL(value); } catch { return res.status(400).send('Invalid QR URL'); }
   if (!['http:', 'https:'].includes(url.protocol)) return res.status(400).send('Invalid QR URL');
@@ -62,6 +61,11 @@ app.get('/api/jokers', (req, res) => {
     (!weapon || joker.weapons.includes(weapon)) &&
     (!search || `${joker.name} ${joker.effect}`.toLowerCase().includes(search))
   ));
+});
+
+app.use((error, _req, res, _next) => {
+  console.error(error);
+  res.status(500).send('Internal server error');
 });
 
 const port = process.env.PORT || 3000;
